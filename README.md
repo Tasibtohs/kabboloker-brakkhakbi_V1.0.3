@@ -2,7 +2,7 @@
 ### *Kabboloker Brakkhakbi — The Poet's Notebook*
 
 <p align="center">
-  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="App Icon" width="128"/>
+  <img src="app/src/main/res/drawable/poetry_app_logo_1785492330798.jpg" alt="App Icon" width="128"/>
 </p>
 
 <p align="center">
