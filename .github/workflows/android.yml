@@ -22,8 +22,31 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
+    - name: Install Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        validate-wrappers: false
+
+    - name: Regenerate Gradle Wrapper
+      run: |
+        GRADLE_VERSION=$(grep -oP '(?<=gradle-)[0-9.]+(?=-(bin|all)\.zip)' gradle/wrapper/gradle-wrapper.properties)
+        echo "Using Gradle version: $GRADLE_VERSION"
+        gradle wrapper --gradle-version "$GRADLE_VERSION"
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    - name: Generate debug keystore
+      run: |
+        keytool -genkey -v \
+          -keystore ~/.android/debug.keystore \
+          -alias androiddebugkey \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -storepass android \
+          -keypass android \
+          -dname "CN=Android Debug,O=Android,C=US"
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug --stacktrace
@@ -32,6 +55,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: |
-          app/build/outputs/apk/debug/*.apk
-          build/outputs/apk/debug/*.apk
+        path: app/build/outputs/apk/debug/*.apk
+
+    - name: Upload APK to Release
+      uses: softprops/action-gh-release@v2
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      with:
+        files: app/build/outputs/apk/debug/*.apk
+        tag_name: v1.0.${{ github.run_number }}
+        name: Release v1.0.${{ github.run_number }}
+        draft: false
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
