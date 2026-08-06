@@ -2,7 +2,6 @@ package com.hmibrahimsarkar.kabboloker_brakkhakbi.util
 
 import android.content.ContentValues
 import android.content.Context
-import android.graphics.pdf.PdfDocument
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -10,19 +9,26 @@ import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.os.ParcelFileDescriptor
+import android.print.PageRange
+import android.print.PrintAttributes
+import android.print.PrintDocumentAdapter
+import android.print.PrintDocumentInfo
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.data.local.entity.NoteEntity
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.font.BengaliFonts
 import java.io.File
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 object PdfExportHelper {
+
+    private const val TAG = "PDF_DEBUG"
 
     /**
      * Checks whether active network connection is available.
@@ -50,17 +56,24 @@ object PdfExportHelper {
      */
     private fun ensureReadableTextColor(textColorHex: String, defaultColorHex: String = "#2C2C3A"): String {
         return try {
-            val color = android.graphics.Color.parseColor(textColorHex)
+            if (textColorHex.isBlank()) return defaultColorHex
+            val cleanHex = textColorHex.trim()
+            val normalizedHex = when {
+                cleanHex.startsWith("#") -> cleanHex
+                cleanHex.length == 6 || cleanHex.length == 8 -> "#$cleanHex"
+                else -> return defaultColorHex
+            }
+            val color = android.graphics.Color.parseColor(normalizedHex)
             val r = android.graphics.Color.red(color) / 255.0
             val g = android.graphics.Color.green(color) / 255.0
             val b = android.graphics.Color.blue(color) / 255.0
             // Calculate relative luminance
             val luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
-            // Cream background luminance is ~0.97. If text luminance is > 0.80, it's too light.
-            if (luminance > 0.80) {
+            // Cream background luminance is ~0.97. If text luminance is > 0.82, it's too light against cream background.
+            if (luminance > 0.82) {
                 defaultColorHex
             } else {
-                textColorHex
+                normalizedHex
             }
         } catch (e: Exception) {
             defaultColorHex
@@ -91,6 +104,7 @@ object PdfExportHelper {
                     sourceFile.inputStream().use { input ->
                         input.copyTo(out)
                     }
+                    out.flush()
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     contentValues.clear()
@@ -106,7 +120,7 @@ object PdfExportHelper {
                 Uri.fromFile(targetFile)
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e(TAG, "Error saving PDF to Public Downloads", e)
             try {
                 val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 if (!downloadsDir.exists()) downloadsDir.mkdirs()
@@ -114,7 +128,7 @@ object PdfExportHelper {
                 sourceFile.copyTo(targetFile, overwrite = true)
                 Uri.fromFile(targetFile)
             } catch (ex: Exception) {
-                ex.printStackTrace()
+                Log.e(TAG, "Fallback download save failed", ex)
                 null
             }
         }
@@ -124,6 +138,7 @@ object PdfExportHelper {
      * Builds HTML template styled like a real published book or poetry collection.
      */
     fun buildHtmlForNotes(notes: List<NoteEntity>, isSingleNote: Boolean): String {
+        Log.d(TAG, "Building HTML for notes. Count: ${notes.size}, isSingleNote: $isSingleNote")
         val exportDate = SimpleDateFormat("dd MMMM, yyyy", Locale("bn", "BD")).format(Date())
         
         // CSS @font-face definitions for all 20 local Bengali fonts from assets
@@ -131,7 +146,7 @@ object PdfExportHelper {
             """
             @font-face {
                 font-family: '${fontOption.key}';
-                src: url('file:///android_asset/fonts/${fontOption.assetFileName}');
+                src: url('fonts/${fontOption.assetFileName}');
             }
             """.trimIndent()
         }
@@ -196,80 +211,89 @@ object PdfExportHelper {
             """.trimIndent()
         } else ""
 
-        // 3. Poem Pages HTML
+        // 3. Poem Pages HTML (With try-catch per note)
         val notesHtml = notes.mapIndexed { index, note ->
-            val title = if (note.title.isNotBlank()) note.title else "শিরোনামহীন কবিতা"
-            val content = if (note.content.isNotBlank()) note.content else "(ফাঁকা কবিতা)"
-            
-            val noteDate = SimpleDateFormat("dd MMMM, yyyy • hh:mm a", Locale("bn", "BD")).format(Date(note.createdAt))
-            val updatedDate = SimpleDateFormat("dd MMMM, yyyy • hh:mm a", Locale("bn", "BD")).format(Date(note.updatedAt))
-            
-            val fontOption = BengaliFonts.getFontByKey(note.fontFamilyKey)
-            val fontCssFamily = "'${fontOption.key}', 'Tiro Bangla', serif, sans-serif"
-
-            val readableTitleColor = ensureReadableTextColor(note.titleColorHex, defaultColorHex = "#B8860B")
-            val readableTextColor = ensureReadableTextColor(note.textColorHex, defaultColorHex = "#2C2C3A")
-            val alignment = note.textAlign.lowercase()
-            
-            val textDecorations = mutableListOf<String>()
-            if (note.isUnderline) textDecorations.add("underline")
-            if (note.isStrikethrough) textDecorations.add("line-through")
-            val textDecorationCss = if (textDecorations.isNotEmpty()) textDecorations.joinToString(" ") else "none"
-            
-            val fontWeight = if (note.isBold) "bold" else "normal"
-            val fontStyle = if (note.isItalic) "italic" else "normal"
-            val fontSizePx = (note.fontSizeSp * 1.25f).coerceAtLeast(15f)
-            val lineHeightRatio = note.lineSpacingMultiplier.coerceAtLeast(1.8f)
-
-            val safeTitle = escapeHtml(title)
-            val safeContent = escapeHtml(content)
-
-            val displayPageNum = if (isSingleNote) "১" else "${3 + index}"
-
-            // Page break before note page unless it's the very first page in single-note mode
-            val isPageBreakNeeded = !(isSingleNote && index == 0)
-
-            """
-            <div class="note-page ${if (isPageBreakNeeded) "page-break" else ""}">
-                <div class="page-top-ornament">
-                    <span class="top-line"></span>
-                    <span class="top-symbol">✦ ❦ ✦</span>
-                    <span class="top-line"></span>
-                </div>
+            try {
+                val title = if (note.title.isNotBlank()) note.title else "শিরোনামহীন কবিতা"
+                val content = if (note.content.isNotBlank()) note.content else "(ফাঁকা কবিতা)"
                 
-                <div class="poem-header" style="text-align: $alignment;">
-                    <h1 class="poem-title" style="color: $readableTitleColor; font-family: $fontCssFamily;">$safeTitle</h1>
-                    <div class="poem-divider">
-                        <span class="poem-divider-line"></span>
-                        <span class="poem-symbol">❦</span>
-                        <span class="poem-divider-line"></span>
+                val noteDate = SimpleDateFormat("dd MMMM, yyyy • hh:mm a", Locale("bn", "BD")).format(Date(note.createdAt))
+                val updatedDate = SimpleDateFormat("dd MMMM, yyyy • hh:mm a", Locale("bn", "BD")).format(Date(note.updatedAt))
+                
+                val fontOption = BengaliFonts.getFontByKey(note.fontFamilyKey)
+                val fontCssFamily = "'${fontOption.key}', 'Tiro Bangla', serif, sans-serif"
+
+                val readableTitleColor = ensureReadableTextColor(note.titleColorHex, defaultColorHex = "#B8860B")
+                val readableTextColor = ensureReadableTextColor(note.textColorHex, defaultColorHex = "#2C2C3A")
+                val alignment = note.textAlign.lowercase()
+                
+                val textDecorations = mutableListOf<String>()
+                if (note.isUnderline) textDecorations.add("underline")
+                if (note.isStrikethrough) textDecorations.add("line-through")
+                val textDecorationCss = if (textDecorations.isNotEmpty()) textDecorations.joinToString(" ") else "none"
+                
+                val fontWeight = if (note.isBold) "bold" else "normal"
+                val fontStyle = if (note.isItalic) "italic" else "normal"
+                val fontSizePx = (note.fontSizeSp * 1.25f).coerceAtLeast(15f)
+                val lineHeightRatio = note.lineSpacingMultiplier.coerceAtLeast(1.8f)
+
+                val safeTitle = escapeHtml(title)
+                val safeContent = escapeHtml(content)
+
+                val displayPageNum = if (isSingleNote) "১" else "${3 + index}"
+
+                val isPageBreakNeeded = !(isSingleNote && index == 0)
+
+                """
+                <div class="note-page ${if (isPageBreakNeeded) "page-break" else ""}">
+                    <div class="page-top-ornament">
+                        <span class="top-line"></span>
+                        <span class="top-symbol">✦ ❦ ✦</span>
+                        <span class="top-line"></span>
                     </div>
-                    <div class="poem-meta">
-                        <span>রচনাকাল: $noteDate</span>
-                        ${if (note.updatedAt > note.createdAt + 60000) " • <span>সম্পাদিত: $updatedDate</span>" else ""}
+                    
+                    <div class="poem-header" style="text-align: $alignment;">
+                        <h1 class="poem-title" style="color: $readableTitleColor; font-family: $fontCssFamily;">$safeTitle</h1>
+                        <div class="poem-divider">
+                            <span class="poem-divider-line"></span>
+                            <span class="poem-symbol">❦</span>
+                            <span class="poem-divider-line"></span>
+                        </div>
+                        <div class="poem-meta">
+                            <span>রচনাকাল: $noteDate</span>
+                            ${if (note.updatedAt > note.createdAt + 60000) " • <span>সম্পাদিত: $updatedDate</span>" else ""}
+                        </div>
+                    </div>
+
+                    <div class="poem-body" style="
+                        color: $readableTextColor;
+                        font-size: ${fontSizePx}px;
+                        font-weight: $fontWeight;
+                        font-style: $fontStyle;
+                        text-decoration: $textDecorationCss;
+                        text-align: $alignment;
+                        line-height: $lineHeightRatio;
+                        font-family: $fontCssFamily;
+                    ">$safeContent</div>
+
+                    <div class="page-bottom-footer">
+                        <div class="footer-divider"></div>
+                        <div class="footer-row">
+                            <span class="footer-app-name">কাব্যলোকের ব্রহ্মকবি</span>
+                            <span class="footer-page-num">— $displayPageNum —</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="poem-body" style="
-                    color: $readableTextColor;
-                    font-size: ${fontSizePx}px;
-                    font-weight: $fontWeight;
-                    font-style: $fontStyle;
-                    text-decoration: $textDecorationCss;
-                    text-align: $alignment;
-                    line-height: $lineHeightRatio;
-                    font-family: $fontCssFamily;
-                ">$safeContent</div>
-
-                <div class="page-bottom-footer">
-                    <div class="footer-divider"></div>
-                    <div class="footer-row">
-                        <span class="footer-app-name">কাব্যলোকের ব্রহ্মকবি</span>
-                        <span class="footer-page-num">— $displayPageNum —</span>
-                    </div>
+                """.trimIndent()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error building HTML for note index $index, id ${note.id}", e)
+                """
+                <div class="note-page page-break">
+                    <h1 class="poem-title" style="color: #2C2C3A;">${escapeHtml(note.title.ifBlank { "নোট" })}</h1>
+                    <div class="poem-body" style="color: #2C2C3A;">${escapeHtml(note.content)}</div>
                 </div>
-            </div>
-            """.trimIndent()
+                """.trimIndent()
+            }
         }.joinToString("\n")
 
         // 4. Ending Page HTML (Only for multi-note book collection)
@@ -626,7 +650,7 @@ object PdfExportHelper {
 
     /**
      * Renders HTML to PDF using Android WebView and PdfDocument.
-     * Guaranteed to wait for onPageFinished() before drawing PDF pages.
+     * Guaranteed to enable slow whole document draw, wait for onPageFinished(), and finalize streams safely.
      */
     fun exportToPdf(
         context: Context,
@@ -637,6 +661,18 @@ object PdfExportHelper {
     ) {
         Handler(Looper.getMainLooper()).post {
             try {
+                Log.d(TAG, "Starting PDF generation process to temp file: ${outputFile.absolutePath}")
+
+                // CRITICAL: Enable whole document drawing BEFORE instantiating WebView for offscreen canvas capture
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    try {
+                        WebView.enableSlowWholeDocumentDraw()
+                        Log.d(TAG, "WebView.enableSlowWholeDocumentDraw() called successfully")
+                    } catch (e: Exception) {
+                        Log.w(TAG, "enableSlowWholeDocumentDraw warning: ${e.message}")
+                    }
+                }
+
                 val webView = WebView(context)
                 webView.settings.apply {
                     javaScriptEnabled = true
@@ -644,16 +680,21 @@ object PdfExportHelper {
                     allowFileAccess = true
                     allowContentAccess = true
                     defaultTextEncodingName = "utf-8"
+                    loadWithOverviewMode = true
+                    useWideViewPort = true
                 }
 
                 webView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView?, url: String?) {
                         super.onPageFinished(view, url)
-                        // Wait briefly to allow fonts and layout to calculate completely
+                        Log.d(TAG, "WebView onPageFinished triggered")
+
+                        // 500ms delay to allow asset fonts and CSS to stabilize layout
                         Handler(Looper.getMainLooper()).postDelayed({
+                            val pdfDocument = android.graphics.pdf.PdfDocument()
                             try {
-                                val width = 595 // A4 width in points
-                                val pageHeight = 842 // A4 height in points
+                                val width = 595 // A4 width in points (8.27 in * 72 dpi)
+                                val pageHeight = 842 // A4 height in points (11.69 in * 72 dpi)
 
                                 webView.measure(
                                     View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
@@ -662,40 +703,57 @@ object PdfExportHelper {
                                 val measuredHeight = webView.measuredHeight.coerceAtLeast(pageHeight)
                                 webView.layout(0, 0, width, measuredHeight)
 
-                                val pdfDocument = PdfDocument()
-                                val totalPages = Math.ceil(measuredHeight.toDouble() / pageHeight).toInt().coerceAtLeast(1)
+                                val totalPages = Math.ceil(measuredHeight.toDouble() / pageHeight.toDouble()).toInt().coerceAtLeast(1)
+                                Log.d(TAG, "Measured WebView height: $measuredHeight px, Total pages to generate: $totalPages")
 
                                 for (i in 0 until totalPages) {
-                                    val pageInfo = PdfDocument.PageInfo.Builder(width, pageHeight, i + 1).create()
+                                    val pageInfo = android.graphics.pdf.PdfDocument.PageInfo.Builder(width, pageHeight, i + 1).create()
                                     val page = pdfDocument.startPage(pageInfo)
                                     val canvas = page.canvas
 
                                     canvas.save()
-                                    canvas.translate(0f, -i.toFloat() * pageHeight)
+                                    canvas.translate(0f, -i.toFloat() * pageHeight.toFloat())
                                     webView.draw(canvas)
                                     canvas.restore()
 
                                     pdfDocument.finishPage(page)
                                 }
 
-                                FileOutputStream(outputFile).use { out ->
-                                    pdfDocument.writeTo(out)
+                                if (outputFile.exists()) {
+                                    outputFile.delete()
                                 }
-                                pdfDocument.close()
 
-                                onSuccess(outputFile)
+                                java.io.FileOutputStream(outputFile).use { out ->
+                                    pdfDocument.writeTo(out)
+                                    out.flush()
+                                }
+
+                                if (outputFile.exists() && outputFile.length() > 0) {
+                                    Log.d(TAG, "PDF write successful. File size: ${outputFile.length()} bytes")
+                                    onSuccess(outputFile)
+                                } else {
+                                    Log.e(TAG, "Generated PDF file is 0 KB or missing")
+                                    onError(Exception("PDF ফাইলটি খালি তৈরি হয়েছে (0 KB)"))
+                                }
                             } catch (e: Exception) {
-                                e.printStackTrace()
-                                onError(Exception("PDF তৈরি করা যায়নি, আবার চেষ্টা করুন"))
+                                Log.e(TAG, "Error rendering PDF canvas or writing to file", e)
+                                onError(Exception("PDF তৈরি করতে ব্যর্থ: ${e.localizedMessage}"))
+                            } finally {
+                                try {
+                                    pdfDocument.close()
+                                } catch (ex: Exception) {
+                                    Log.e(TAG, "Error closing PdfDocument", ex)
+                                }
                             }
-                        }, 300)
+                        }, 500)
                     }
                 }
 
+                Log.d(TAG, "Loading HTML into WebView with base URL file:///android_asset/ ...")
                 webView.loadDataWithBaseURL("file:///android_asset/", htmlContent, "text/html", "utf-8", null)
             } catch (e: Exception) {
-                e.printStackTrace()
-                onError(Exception("PDF তৈরি করা যায়নি, আবার চেষ্টা করুন"))
+                Log.e(TAG, "Error initializing WebView for PDF export", e)
+                onError(Exception("PDF তৈরি করতে সমস্যা হয়েছে: ${e.localizedMessage}"))
             }
         }
     }
@@ -711,26 +769,36 @@ object PdfExportHelper {
         onError: (Exception) -> Unit
     ) {
         val tempFile = File(context.cacheDir, "temp_pdf_${System.currentTimeMillis()}.pdf")
+        Log.d(TAG, "exportToPdfToUri called with targetUri: $targetUri, tempFile: ${tempFile.absolutePath}")
+        
         exportToPdf(
             context = context,
             htmlContent = htmlContent,
             outputFile = tempFile,
             onSuccess = { cacheFile ->
                 try {
+                    Log.d(TAG, "Copying cacheFile (${cacheFile.length()} bytes) to targetUri: $targetUri")
                     context.contentResolver.openOutputStream(targetUri, "w")?.use { out ->
                         cacheFile.inputStream().use { input ->
                             input.copyTo(out)
                         }
                         out.flush()
-                    }
-                    cacheFile.delete()
+                    } ?: throw Exception("Output stream open করতে পারা যায়নি")
+                    
+                    try { cacheFile.delete() } catch (e: Exception) {}
+                    Log.d(TAG, "Successfully written PDF to targetUri")
                     onSuccess()
                 } catch (e: Exception) {
-                    e.printStackTrace()
-                    onError(Exception("PDF সংরক্ষণ করা যায়নি, আবার চেষ্টা করুন"))
+                    Log.e(TAG, "Failed to copy PDF to targetUri", e)
+                    try { cacheFile.delete() } catch (ex: Exception) {}
+                    onError(Exception("PDF ফাইলে সংরক্ষণ ব্যর্থ হয়েছে: ${e.localizedMessage}"))
                 }
             },
-            onError = onError
+            onError = { e ->
+                try { tempFile.delete() } catch (ex: Exception) {}
+                onError(e)
+            }
         )
     }
 }
+
