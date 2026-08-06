@@ -1,126 +1,192 @@
-# 📖 কাব্যলোকের ব্রক্ষকবি
-### *Kabboloker Brakkhakbi — The Poet's Notebook*
-
-<p align="center">
-  <img src="app/src/main/res/drawable/poetry_app_logo_1785492330798.jpg" alt="App Icon" width="128"/>
-</p>
-
-<p align="center">
-  <b>একটি আধুনিক, নমনীয় ও দৃষ্টিনন্দন বাংলা নোটপ্যাড ও সাহিত্য লিখন অ্যান্ড্রয়েড অ্যাপ্লিকেশন</b>
-</p>
-
-<p align="center">
+<div align="center">
+  <img src="app/src/main/res/drawable/poetry_app_logo_1785492330798.jpg" alt="App Icon" width="140"/>
+  
+  # 📖 কাব্যলোকের ব্রক্ষকবি
+  ### *Kabboloker Brakkhakbi — The Poet's Notebook*
+  
+  <p>
+    <b>একটি আধুনিক, নমনীয় ও দৃষ্টিনন্দন বাংলা নোটপ্যাড ও সাহিত্য লিখন অ্যান্ড্রয়েড অ্যাপ্লিকেশন</b>
+  </p>
+  
+  <br>
+  
   <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?color=success&label=📦%20Latest%20Release&style=for-the-badge"/>
+    <img src="https://img.shields.io/github/v/release/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?color=6C63FF&label=📦%20Latest%20Release&style=for-the-badge"/>
   </a>
   <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-red?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-FF6B6B?style=for-the-badge"/>
   </a>
   <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3">
-    <img src="https://img.shields.io/github/stars/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=for-the-badge&color=yellow"/>
+    <img src="https://img.shields.io/github/stars/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=for-the-badge&color=F9CA24"/>
   </a>
   <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/android.yml?style=for-the-badge&label=Build%20Status"/>
+    <img src="https://img.shields.io/github/actions/workflow/status/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/android.yml?style=for-the-badge&label=Build%20Status&color=6AB04C"/>
   </a>
-  <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/issues">
-    <img src="https://img.shields.io/github/issues/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=for-the-badge&color=orange"/>
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Platform-Android-brightgreen?style=flat-square&logo=android"/>
+  
+  <br><br>
+  
+  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=flat-square&logo=android"/>
   <img src="https://img.shields.io/badge/API-24%2B-brightgreen?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Kotlin-1.9.0-purple?style=flat-square&logo=kotlin"/>
-  <img src="https://img.shields.io/badge/Jetpack%20Compose-1.5.0-blue?style=flat-square&logo=jetpackcompose"/>
+  <img src="https://img.shields.io/badge/Kotlin-1.9.0-7F52FF?style=flat-square&logo=kotlin"/>
+  <img src="https://img.shields.io/badge/Jetpack%20Compose-1.5.0-4285F4?style=flat-square&logo=jetpackcompose"/>
   <img src="https://img.shields.io/badge/Material%20Design-3-757575?style=flat-square&logo=materialdesign"/>
-</p>
+  <img src="https://img.shields.io/badge/Room-003B57?style=flat-square&logo=sqlite"/>
+  
+  <br><br>
+  
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=500&color=6C63FF&center=true&vCenter=true&width=600&lines=যেখানে+শব্দ+হয়+অমর;সেখানে+কাব্যলোক;আপনার+সাহিত্য+সাথী" alt="Typing SVG"/>
+  
+  <br>
+</div>
 
 ---
 
-## ✨ পরিচিতি
+## 📖 ✨ ভূমিকা
 
-**কাব্যলোকের ব্রক্ষকবি** হলো একটি বিশেষায়িত বাংলা সাহিত্য লিখন অ্যাপ্লিকেশন যা লেখক, কবি, সাংবাদিক ও সাধারণ ব্যবহারকারীদের জন্য নির্মিত। এটি বাংলা ভাষার সমৃদ্ধ টাইপোগ্রাফি, নিরাপদ নোট সংরক্ষণ ও উন্নত কাস্টমাইজেশন সুবিধা প্রদান করে। এই অ্যাপটি বাংলা সাহিত্য চর্চাকে ডিজিটাল প্ল্যাটফর্মে আরও সহজ, সুন্দর ও কার্যকরী করে তুলেছে।
+> **কাব্যলোকের ব্রক্ষকবি** হলো একটি বিশেষায়িত বাংলা সাহিত্য লিখন অ্যাপ্লিকেশন যা লেখক, কবি, সাংবাদিক ও সাধারণ ব্যবহারকারীদের জন্য নির্মিত। এটি বাংলা ভাষার সমৃদ্ধ টাইপোগ্রাফি, নিরাপদ নোট সংরক্ষণ ও উন্নত কাস্টমাইজেশন সুবিধা প্রদান করে। এই অ্যাপটি বাংলা সাহিত্য চর্চাকে ডিজিটাল প্ল্যাটফর্মে আরও সহজ, সুন্দর ও কার্যকরী করে তুলেছে।
 
-<p align="center">
-  <b>“যেখানে শব্দ হয় অমর, সেখানে কাব্যলোক”</b>
-</p>
+<br>
 
----
+<details>
+<summary><b>🌟 কেন কাব্যলোকের ব্রক্ষকবি?</b></summary>
+<br>
 
-## 📱 স্ক্রিনশট
+| | |
+|---|---|
+| 🎯 **শুধু নোট নয়, সাহিত্য** | বাংলা সাহিত্যের জন্য বিশেষভাবে ডিজাইন করা |
+| 🖋️ **সমৃদ্ধ টাইপোগ্রাফি** | ২০+ বাংলা ফন্টের বিশাল সংগ্রহ |
+| 🔒 **নিরাপদ** | পাসওয়ার্ড ও বায়োমেট্রিক সুরক্ষা |
+| 📄 **পেশাদার** | পিডিএফ এক্সপোর্ট ও প্রিন্টিং |
+| 💾 **নিরাপদ ব্যাকআপ** | ডেটা কখনো হারাবেন না |
 
-<p align="center">
-  <img src="screenshots/screenshot_1.png" width="180" alt="Home"/>
-  <img src="screenshots/screenshot_2.png" width="180" alt="Editor"/>
-  <img src="screenshots/screenshot_3.png" width="180" alt="Fonts"/>
-  <img src="screenshots/screenshot_4.png" width="180" alt="PDF"/>
-</p>
-
-<p align="center">
-  <sub>🔹 হোম স্ক্রিন &nbsp;|&nbsp; 🔹 এডিটর &nbsp;|&nbsp; 🔹 ফন্ট সিলেক্টর &nbsp;|&nbsp; 🔹 পিডিএফ এক্সপোর্ট</sub>
-</p>
+</details>
 
 ---
 
-## 🌟 মূল বৈশিষ্ট্যসমূহ
+## 📸 স্ক্রিনশট
 
-### 📝 টাইপোগ্রাফি ও স্টাইলিং
-- **২০+ বাংলা ফন্ট** — আলিনুর, বনলতা, বাসন্তী, কবিতা, মাহফুজ, শরীফা ফিফা, সবুজ নলুয়া সহ আরও অনেক
-- **ফন্ট সাইজ** — ১২px থেকে ৪৮px পর্যন্ত নিয়ন্ত্রণ
-- **টেক্সট কালার** — প্রিমিয়াম কালার প্যালেট
-- **ব্যাকগ্রাউন্ড কালার** — চোখের আরামদায়ক থিম
+<div align="center">
+  
+| হোম স্ক্রিন | এডিটর | ফন্ট সিলেক্টর | পিডিএফ এক্সপোর্ট |
+|:---:|:---:|:---:|:---:|
+| <img src="screenshots/screenshot_1.png" width="150"/> | <img src="screenshots/screenshot_2.png" width="150"/> | <img src="screenshots/screenshot_3.png" width="150"/> | <img src="screenshots/screenshot_4.png" width="150"/> |
+
+</div>
+
+---
+
+## 🌟 বৈশিষ্ট্যসমূহ
+
+### 🎨 টাইপোগ্রাফি ও স্টাইলিং
+
+<table>
+<tr>
+<td width="50%">
+
+**📝 ২০+ বাংলা ফন্ট**
+- আলিনুর এফোর্ট
+- আলিনুর গোধূলি
+- আলিনুর ইচ্ছামতী
+- অনুপম মাহদী
+- আত্মা
+- বাঁধন জননী
+- বাসন্তী
+- কল্পনা
+- কবিতা
+- শহীদ তাহমিদ তামিম
+
+</td>
+<td width="50%">
+
+**🎯 কাস্টমাইজেশন**
+- ফন্ট সাইজ (১২px - ৪৮px)
+- টেক্সট কালার প্যালেট
+- ব্যাকগ্রাউন্ড থিম
+- লাইন স্পেসিং
+- প্যারাগ্রাফ স্পেসিং
+- ওয়ার্ড কাউন্ট
+
+</td>
+</tr>
+</table>
 
 ### 📂 সংগঠন ও ব্যবস্থাপনা
-- **ক্যাটাগরি/গ্রুপ** — থিমভিত্তিক নোট সংগঠন
-- **ট্যাগিং সিস্টেম** — গুরুত্বপূর্ণ নোট চিহ্নিতকরণ
-- **পিন্ড নোট** — গুরুত্বপূর্ণ নোট শীর্ষে রাখা
-- **সার্চ ফাংশন** — টাইটেল, কন্টেন্ট ও ট্যাগ অনুযায়ী খোঁজ
+
+| ফিচার | বিবরণ |
+|--------|--------|
+| 📁 **ক্যাটাগরি/গ্রুপ** | থিমভিত্তিক নোট সংগঠন |
+| 🏷️ **ট্যাগিং সিস্টেম** | গুরুত্বপূর্ণ নোট চিহ্নিতকরণ |
+| 📌 **পিন্ড নোট** | গুরুত্বপূর্ণ নোট শীর্ষে রাখা |
+| 🔍 **সার্চ** | টাইটেল, কন্টেন্ট ও ট্যাগ অনুযায়ী খোঁজ |
+| 📊 **স্ট্যাটিস্টিক্স** | নোট সংখ্যা, শব্দ গণনা |
 
 ### 🔒 নিরাপত্তা
-- **হিডেন নোটস** — পাসওয়ার্ড-সুরক্ষিত গোপন নোট
-- **বায়োমেট্রিক আনলক** — ফিঙ্গারপ্রিন্ট/ফেস আনলক সাপোর্ট
-- **অ্যাপ লক** — সম্পূর্ণ অ্যাপ্লিকেশন পাসওয়ার্ড প্রটেকশন
+
+```mermaid
+graph LR
+    A[নোট] --> B{সুরক্ষা স্তর}
+    B --> C[🔐 হিডেন নোট]
+    B --> D[👆 বায়োমেট্রিক]
+    B --> E[🔑 অ্যাপ লক]
+    C --> F[পাসওয়ার্ড সুরক্ষা]
+    D --> G[ফিঙ্গারপ্রিন্ট/ফেস]
+    E --> H[পিন/প্যাটার্ন]
+```
 
 ### ♻️ ডেটা নিরাপত্তা
-- **ট্র্যাশ বিন** — ৩০ দিন পর্যন্ত মুছে ফেলা নোট সংরক্ষণ
-- **রিকভারি সিস্টেম** — সহজ পুনরুদ্ধার প্রক্রিয়া
-- **পার্মানেন্ট ডিলিট** — সম্পূর্ণ মুছে ফেলার অপশন
+
+- 🗑️ **ট্র্যাশ বিন** — ৩০ দিন পর্যন্ত সংরক্ষণ
+- 🔄 **রিকভারি** — সহজ পুনরুদ্ধার প্রক্রিয়া
+- ❌ **পার্মানেন্ট ডিলিট** — সম্পূর্ণ মুছে ফেলার অপশন
+- 💾 **অটো-সেভ** — প্রতি ৩০ সেকেন্ড পর পর
 
 ### 📄 এক্সপোর্ট ও শেয়ারিং
-- **পিডিএফ এক্সপোর্ট** — প্রিমিয়াম ফরম্যাটে নোট সংরক্ষণ
-- **টেক্সট ফাইল** — .txt ফরম্যাটে এক্সপোর্ট
-- **শেয়ারিং** — অন্যান্য অ্যাপে শেয়ার করার সুবিধা
 
-### 💾 ব্যাকআপ ও রিস্টোর
-- **লোকাল ব্যাকআপ** — ডিভাইস স্টোরেজে ব্যাকআপ
-- **অটো ব্যাকআপ** — নিয়মিত স্বয়ংক্রিয় ব্যাকআপ
+| ফরম্যাট | সুবিধা |
+|----------|---------|
+| 📄 **PDF** | প্রিমিয়াম ডকুমেন্ট ফরম্যাট |
+| 📝 **TXT** | ইউনিভার্সাল টেক্সট ফরম্যাট |
+| 📤 **শেয়ার** | অন্যান্য অ্যাপে শেয়ারিং |
+| 🖨️ **প্রিন্ট** | ডাইরেক্ট প্রিন্টিং অপশন |
 
-### 🎨 ভিজুয়াল থিম
-- **ডার্ক মোড** — আই-ফ্রেন্ডলি নাইট মোড
-- **লাইট মোড** — ক্লাসিক ডে মোড
-- **সেপিয়া মোড** — প্রাচীন পাণ্ডুলিপি থিম
+### 💾 ব্যাকআপ
+
+- 📱 **লোকাল ব্যাকআপ** — ডিভাইস স্টোরেজে
+- 🔄 **অটো ব্যাকআপ** — নিয়মিত স্বয়ংক্রিয়
+- ☁️ **ক্লাউড** — Google Drive (আসন্ন)
+
+### 🎨 থিম
+
+| মোড | বিবরণ |
+|-----|--------|
+| ☀️ **লাইট মোড** | ক্লাসিক ডে মোড |
+| 🌙 **ডার্ক মোড** | আই-ফ্রেন্ডলি নাইট মোড |
+| 📜 **সেপিয়া মোড** | প্রাচীন পাণ্ডুলিপি থিম |
+| 🎯 **কাস্টম থিম** | ব্যক্তিগতকৃত কালার স্কিম |
 
 ---
 
 ## 📥 ডাউনলোড
 
-<p align="center">
+<div align="center">
+  
   <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/releases/latest">
-    <img src="https://img.shields.io/badge/📥%20Download%20Latest%20APK-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"/>
+    <img src="https://img.shields.io/badge/📥%20Download%20Latest%20APK-3DDC84?style=for-the-badge&logo=android&logoColor=white&height=50"/>
   </a>
   <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/releases">
-    <img src="https://img.shields.io/badge/📋%20All%20Releases-181717?style=for-the-badge&logo=github&logoColor=white" alt="All Releases"/>
+    <img src="https://img.shields.io/badge/📋%20All%20Releases-181717?style=for-the-badge&logo=github&logoColor=white&height=50"/>
   </a>
-</p>
+  
+</div>
 
-### 📲 ইন্সটলেশন নির্দেশনা
+### 📲 ইন্সটলেশন
 
-| ধাপ | বিবরণ |
-|-----|-------|
-| ১ | উপরের লিংক থেকে **APK** ফাইল ডাউনলোড করুন |
-| ২ | ফোনের **Settings > Security** এ গিয়ে **Unknown Sources** অনুমতি দিন |
-| ৩ | ডাউনলোড করা APK ফাইলে ট্যাপ করে **ইন্সটল** করুন |
-| ৪ | ইন্সটল সম্পন্ন হলে অ্যাপটি **ওপেন** করুন |
+| # | ধাপ | বিবরণ |
+|---|-----|--------|
+| 1 | ⬇️ **ডাউনলোড** | APK ফাইল ডাউনলোড করুন |
+| 2 | ⚙️ **অনুমতি** | Settings → Security → Unknown Sources |
+| 3 | 📲 **ইন্সটল** | APK ফাইলে ট্যাপ করে ইন্সটল করুন |
+| 4 | 🚀 **চালু** | ইন্সটল সম্পন্ন হলে অ্যাপটি ওপেন করুন |
 
 > ⚠️ **দ্রষ্টব্য:** অ্যাপটি ন্যূনতম **Android 7.0 (API 24)** বা তার উপরে চলে।
 
@@ -128,57 +194,52 @@
 
 ## 🛠 টেকনোলজি স্ট্যাক
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Room%20Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Material%20Design%203-757575?style=for-the-badge&logo=materialdesign&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Coroutines-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"/>
-</p>
+<div align="center">
 
-| প্রযুক্তি | ব্যবহার |
-|-----------|---------|
-| **ভাষা** | Kotlin 1.9.0 |
-| **UI ফ্রেমওয়ার্ক** | Jetpack Compose 1.5.0 |
-| **ডিজাইন সিস্টেম** | Material Design 3 |
-| **লোকাল ডেটাবেস** | Room Database (SQLite) |
-| **আর্কিটেকচার** | MVVM + Clean Architecture |
-| **অ্যাসিঙ্ক্রোনাস** | Kotlin Coroutines & Flow |
-| **পিডিএফ ইঞ্জিন** | Android PdfDocument API |
-| **সিকিউরিটি** | AndroidX Security Crypto |
-| **সিআই/সিডি** | GitHub Actions |
-| **নির্মাণ টুল** | Gradle 8.11.1 |
+| প্রযুক্তি | ব্যবহার | সংস্করণ |
+|-----------|---------|----------|
+| <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=kotlin&logoColor=white"/> | ভাষা | 1.9.0 |
+| <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose&logoColor=white"/> | UI ফ্রেমওয়ার্ক | 1.5.0 |
+| <img src="https://img.shields.io/badge/Material%20Design%203-757575?style=flat&logo=materialdesign&logoColor=white"/> | ডিজাইন সিস্টেম | 3 |
+| <img src="https://img.shields.io/badge/Room-003B57?style=flat&logo=sqlite&logoColor=white"/> | লোকাল ডেটাবেস | 2.5.2 |
+| <img src="https://img.shields.io/badge/MVVM-FF6B6B?style=flat"/> | আর্কিটেকচার | Clean Architecture |
+| <img src="https://img.shields.io/badge/Coroutines-7F52FF?style=flat&logo=kotlin&logoColor=white"/> | অ্যাসিঙ্ক্রোনাস | 1.7.3 |
+| <img src="https://img.shields.io/badge/PDF-FF0000?style=flat"/> | PDF ইঞ্জিন | PdfDocument API |
+| <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white"/> | CI/CD | - |
+
+</div>
 
 ---
 
 ## 📂 প্রজেক্ট স্ট্রাকচার
 
 ```
-📁 app/src/main/
-├── 📁 java/com/tasibtohs/kabboloker_brakkhakbi/
-│   ├── 📁 data/
-│   │   ├── 📁 database/        # Room DB configuration
-│   │   ├── 📁 entities/        # Data models
-│   │   └── 📁 dao/             # Data Access Objects
-│   ├── 📁 ui/
-│   │   ├── 📁 components/      # Reusable UI widgets
-│   │   ├── 📁 screens/         # All screens
-│   │   ├── 📁 theme/           # Color, typography, themes
-│   │   └── 📁 navigation/      # Navigation graph
-│   ├── 📁 util/
-│   │   ├── 📁 export/          # PDF, TXT, Backup
-│   │   ├── 📁 security/        # Encryption, Biometric
-│   │   └── 📁 helpers/         # Utility functions
-│   ├── 📁 di/                  # Dependency Injection
-│   └── 📄 MainActivity.kt      # Entry point
-├── 📁 res/
-│   ├── 📁 font/                # 20+ Bengali fonts (.ttf)
-│   ├── 📁 drawable/            # Vector icons & graphics
-│   ├── 📁 mipmap-*/            # App icons
-│   └── 📁 values/              # Colors, strings, themes
-└── 📁 assets/
-    └── 📁 fonts/               # Additional fonts
+📁 kabboloker-brakkhakbi/
+├── 📁 app/
+│   └── 📁 src/
+│       └── 📁 main/
+│           ├── 📁 java/
+│           │   └── 📁 com/tasibtohs/kabboloker_brakkhakbi/
+│           │       ├── 📁 data/
+│           │       │   ├── 📁 database/        # Room DB
+│           │       │   ├── 📁 entities/        # Models
+│           │       │   └── 📁 dao/             # Data Access
+│           │       ├── 📁 ui/
+│           │       │   ├── 📁 components/      # Widgets
+│           │       │   ├── 📁 screens/         # Screens
+│           │       │   ├── 📁 theme/           # Styling
+│           │       │   └── 📁 navigation/      # Nav Graph
+│           │       ├── 📁 util/
+│           │       │   ├── 📁 export/          # PDF/TXT/Backup
+│           │       │   ├── 📁 security/        # Encryption
+│           │       │   └── 📁 helpers/         # Utilities
+│           │       └── 📁 di/                  # Dagger/Hilt
+│           └── 📁 res/
+│               ├── 📁 font/                    # 20+ Bengali Fonts
+│               ├── 📁 drawable/                # Icons
+│               ├── 📁 mipmap-*/                # App Icons
+│               └── 📁 values/                  # Resources
+└── 📄 build.gradle
 ```
 
 ---
@@ -188,28 +249,28 @@
 ### 📋 পূর্বশর্ত
 
 | টুল | সংস্করণ |
-|-----|---------|
-| Android Studio | Ladybug বা তার পরবর্তী |
+|-----|----------|
+| Android Studio | Ladybug+ |
 | JDK | 17+ |
-| Android SDK | API 24 - 35 |
+| Android SDK | API 24-35 |
 | Gradle | 8.11.1 |
 
 ### 🔧 সেটআপ ও বিল্ড
 
 ```bash
-# ১. প্রজেক্ট ক্লোন করুন
+# ১. ক্লোন
 git clone https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3.git
 
-# ২. প্রজেক্ট ডিরেক্টরিতে যান
+# ২. ডিরেক্টরি
 cd kabboloker-brakkhakbi_V1.0.3
 
-# ৩. ডিবাগ ভার্সন বিল্ড করুন
+# ৩. ডিবাগ বিল্ড
 ./gradlew assembleDebug
 
-# ৪. রিলিজ ভার্সন বিল্ড করুন
+# ৪. রিলিজ বিল্ড
 ./gradlew assembleRelease
 
-# ৫. ডিভাইসে ইন্সটল করুন
+# ৫. ইন্সটল
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
@@ -217,33 +278,25 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 
 ```gradle
 // Core
-implementation("androidx.core:core-ktx:1.12.0")
-implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+implementation 'androidx.core:core-ktx:1.12.0'
+implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
 // Compose
-implementation(platform("androidx.compose:compose-bom:2024.02.01"))
-implementation("androidx.compose.ui:ui")
-implementation("androidx.compose.material3:material3")
-implementation("androidx.compose.material:material-icons-extended")
-
-// Navigation
-implementation("androidx.navigation:navigation-compose:2.7.6")
+implementation platform('androidx.compose:compose-bom:2024.02.01')
+implementation 'androidx.compose.ui:ui'
+implementation 'androidx.compose.material3:material3'
 
 // Database
-implementation("androidx.room:room-runtime:2.5.2")
-implementation("androidx.room:room-ktx:2.5.2")
-kapt("androidx.room:room-compiler:2.5.2")
+implementation 'androidx.room:room-runtime:2.5.2'
+implementation 'androidx.room:room-ktx:2.5.2'
+kapt 'androidx.room:room-compiler:2.5.2'
 
-// PDF Export
-implementation("com.itextpdf:itext7-core:7.2.5")
-implementation("com.itextpdf:itext7-font-asian:7.2.5")
+// PDF
+implementation 'com.itextpdf:itext7-core:7.2.5'
 
 // Security
-implementation("androidx.security:security-crypto:1.1.0-alpha06")
-implementation("androidx.biometric:biometric:1.1.0")
-
-// Coroutines
-implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+implementation 'androidx.biometric:biometric:1.1.0'
 ```
 
 ---
@@ -254,69 +307,72 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 # ইউনিট টেস্ট
 ./gradlew test
 
-# Android ইনস্ট্রুমেন্টেশন টেস্ট
+# Android টেস্ট
 ./gradlew connectedAndroidTest
 
 # কভারেজ রিপোর্ট
 ./gradlew testDebugUnitTestCoverage
-
-# নির্দিষ্ট টেস্ট ক্লাস
-./gradlew test --tests "com.tasibtohs.kabboloker_brakkhakbi.NoteDaoTest"
 ```
 
 ---
 
 ## 📊 রোডম্যাপ
 
-### ✅ v1.0.0 — বর্তমান সংস্করণ
-- [x] মৌলিক নোট তৈরি, সম্পাদনা, মুছে ফেলা
-- [x] ২০+ বাংলা ফন্ট
-- [x] ক্যাটাগরি ব্যবস্থাপনা
-- [x] ট্র্যাশ বিন ও পুনরুদ্ধার
-- [x] পিডিএফ এক্সপোর্ট
-- [x] লোকাল ব্যাকআপ
-- [x] ডার্ক/লাইট থিম
+### ✅ v1.0.0 — বর্তমান
+
+| সম্পন্ন | ফিচার |
+|---------|--------|
+| ✅ | মৌলিক নোট CRUD |
+| ✅ | ২০+ বাংলা ফন্ট |
+| ✅ | ক্যাটাগরি ব্যবস্থাপনা |
+| ✅ | ট্র্যাশ বিন |
+| ✅ | PDF এক্সপোর্ট |
+| ✅ | লোকাল ব্যাকআপ |
+| ✅ | ডার্ক/লাইট থিম |
 
 ### 🚀 v1.1.0 — আসন্ন
-- [ ] Google Drive ব্যাকআপ
-- [ ] ভয়েস টু টেক্সট
-- [ ] বাংলা বানান সংশোধন
-- [ ] লাইভ ওয়ার্ড কাউন্ট
-- [ ] হ্যান্ডরাইটিং রিকগনিশন
+
+| আসন্ন | ফিচার |
+|--------|--------|
+| ⏳ | Google Drive ব্যাকআপ |
+| ⏳ | ভয়েস টু টেক্সট |
+| ⏳ | বাংলা বানান সংশোধন |
+| ⏳ | ওয়ার্ড কাউন্ট লাইভ |
 
 ### 🌟 v1.2.0 — ভবিষ্যৎ
-- [ ] AI-পাওয়ার্ড কন্টেন্ট জেনারেশন
-- [ ] সোশ্যাল মিডিয়া শেয়ারিং
-- [ ] মাল্টি-ডিভাইস সিঙ্ক
-- [ ] প্লাগইন সিস্টেম
-- [ ] সম্পাদনা ইতিহাস
+
+| পরিকল্পনা | ফিচার |
+|-----------|--------|
+| 💡 | AI কন্টেন্ট জেনারেশন |
+| 💡 | সোশ্যাল মিডিয়া শেয়ারিং |
+| 💡 | মাল্টি-ডিভাইস সিঙ্ক |
+| 💡 | প্লাগইন সিস্টেম |
 
 ---
 
 ## 🤝 কন্ট্রিবিউশন
 
-### কিভাবে অংশগ্রহণ করবেন
+### 📋 প্রক্রিয়া
 
-| ধাপ | বিবরণ |
-|-----|-------|
-| ১ | রিপোজিটরি **ফর্ক** করুন |
-| ২ | নতুন ব্রাঞ্চ তৈরি করুন: `git checkout -b feature/আপনার-ফিচার` |
-| ৩ | পরিবর্তন করুন ও কমিট করুন: `git commit -m 'যোগ করুন: নতুন ফিচার'` |
-| ৪ | ব্রাঞ্চ পুশ করুন: `git push origin feature/আপনার-ফিচার` |
-| ৫ | **পুল রিকোয়েস্ট** খুলুন |
+```mermaid
+graph LR
+    A[ফর্ক] --> B[ব্রাঞ্চ তৈরি]
+    B --> C[কমিট]
+    C --> D[পুশ]
+    D --> E[পুল রিকোয়েস্ট]
+```
 
 ### 📝 কোড স্টাইল
 
 ```kotlin
 // ফাইল: PascalCase
 // ফাংশন: camelCase
-// প্রোপার্টি: camelCase
 // কনস্ট্যান্ট: SCREAMING_SNAKE_CASE
 
 class NoteEditorScreen {
     companion object {
-        private const val MAX_CONTENT_LENGTH = 50000
-        private const val DEFAULT_FONT_SIZE = 18f
+        private const val MAX_LENGTH = 50000
+        private const val DEFAULT_SIZE = 18f
     }
 }
 ```
@@ -325,56 +381,59 @@ class NoteEditorScreen {
 
 ## 📄 লাইসেন্স
 
+<div align="center">
+
 ```
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║   কাব্যলোকের ব্রক্ষকবি — Bengali Poetry & Literature App    ║
+║   📖 কাব্যলোকের ব্রক্ষকবি                                   ║
+║   Bengali Poetry & Literature App                          ║
 ║                                                              ║
-║   Copyright © 2026 HM Ibrahim Sarkar. All rights reserved.  ║
+║   Copyright © 2026 HM Ibrahim Sarkar                       ║
+║   All Rights Reserved                                      ║
 ║                                                              ║
-║   এই অ্যাপ্লিকেশনটির সমস্ত অধিকার সংরক্ষিত।                 ║
-║   অনুমতি ছাড়া এই অ্যাপ্লিকেশন বা এর কোনো অংশ                ║
-║   কপি, পরিবর্তন, বিতরণ, বা পুনঃপ্রকাশ করা যাবে না।         ║
+║   এই অ্যাপ্লিকেশনটির সমস্ত অধিকার সংরক্ষিত।               ║
+║   অনুমতি ছাড়া কপি, পরিবর্তন, বিতরণ নিষিদ্ধ।              ║
 ║                                                              ║
-║   For licensing inquiries: hmibrahimsarkar@gmail.com        ║
+║   📧 hmibrahimsarkar@gmail.com                             ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
+
 ```
+
+</div>
 
 ---
 
 ## 👨‍💻 ডেভেলপার
 
-<p align="center">
-  <b>HM Ibrahim Sarkar</b><br>
-  <sub>Android Developer | Tech Enthusiast | Literature Lover</sub>
-</p>
+<div align="center">
+  
+### HM Ibrahim Sarkar
+*Android Developer | Tech Enthusiast | Literature Lover*
 
-<p align="center">
-  <a href="https://github.com/Tasibtohs">
-    <img src="https://img.shields.io/badge/GitHub-Tasibtohs-181717?style=for-the-badge&logo=github&logoColor=white"/>
-  </a>
-  <a href="mailto:hmibrahimsarkar@gmail.com">
-    <img src="https://img.shields.io/badge/Email-hmibrahimsarkar%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white"/>
-  </a>
-  <a href="https://www.facebook.com/hmibrahimsarkar">
-    <img src="https://img.shields.io/badge/Facebook-hmibrahimsarkar-1877F2?style=for-the-badge&logo=facebook&logoColor=white"/>
-  </a>
-  <a href="https://twitter.com/hmibrahimsarkar">
-    <img src="https://img.shields.io/badge/Twitter-hmibrahimsarkar-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white"/>
-  </a>
-</p>
+[![GitHub](https://img.shields.io/badge/GitHub-Tasibtohs-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tasibtohs)
+[![Email](https://img.shields.io/badge/Email-hmibrahimsarkar%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:hmibrahimsarkar@gmail.com)
+[![Facebook](https://img.shields.io/badge/Facebook-hmibrahimsarkar-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/hmibrahimsarkar)
+[![Twitter](https://img.shields.io/badge/Twitter-hmibrahimsarkar-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/hmibrahimsarkar)
+
+</div>
 
 ---
 
 ## 🙏 কৃতজ্ঞতা
 
-- **সবুজ নলুয়া** — প্রসেনজিৎ মণ্ডল
-- **আলিনুর ফন্ট পরিবার** — আলিনুর রহমান
-- **বনলতা** — মাহফুজ এ. কে.
-- **শরীফা ফিফা** — শরীফা ফিফা
-- **বাংলা টাইপোগ্রাফি কমিউনিটি** — বাংলা ফন্ট ডেভেলপমেন্টের জন্য
-- **অ্যান্ড্রয়েড ডেভেলপার কমিউনিটি** — Jetpack Compose ও Material Design 3-এর জন্য
+<div align="center">
+
+| | |
+|---|---|
+| **সবুজ নলুয়া** | প্রসেনজিৎ মণ্ডল |
+| **আলিনুর ফন্ট পরিবার** | আলিনুর রহমান |
+| **বনলতা** | মাহফুজ এ. কে. |
+| **বাংলা টাইপোগ্রাফি কমিউনিটি** | বাংলা ফন্ট ডেভেলপমেন্টের জন্য |
+| **অ্যান্ড্রয়েড ডেভেলপার কমিউনিটি** | Jetpack Compose ও Material Design 3-এর জন্য |
+
+</div>
 
 ---
 
@@ -391,53 +450,49 @@ class NoteEditorScreen {
 
 ## ⭐ সাপোর্ট
 
-<p align="center">
-  এই প্রজেক্টটি ভালো লাগলে GitHub এ একটি ⭐ দিন!<br>
-  আপনার সাপোর্ট আমাদের আরও ভালো অ্যাপ বানাতে উৎসাহ যোগায়।
-</p>
+<div align="center">
+  
+**এই প্রজেক্টটি ভালো লাগলে GitHub এ একটি ⭐ দিন!**
 
-<p align="center">
-  <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3">
-    <img src="https://img.shields.io/github/stars/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=social"/>
-  </a>
-  <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/watchers">
-    <img src="https://img.shields.io/github/watchers/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=social"/>
-  </a>
-  <a href="https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/forks">
-    <img src="https://img.shields.io/github/forks/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=social"/>
-  </a>
-</p>
+[![Stars](https://img.shields.io/github/stars/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=social)](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3)
+[![Watchers](https://img.shields.io/github/watchers/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=social)](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3)
+[![Forks](https://img.shields.io/github/forks/Tasibtohs/kabboloker-brakkhakbi_V1.0.3?style=social)](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3)
+
+</div>
 
 ---
 
 ## 📝 সংস্করণ ইতিহাস
 
-| সংস্করণ | তারিখ | পরিবর্তনসমূহ |
-|---------|-------|--------------|
-| **v1.0.3** | ২০২৬-০১-১৫ | 🐛 বাগ ফিক্স, ⚡ পারফরম্যান্স ইমপ্রুভমেন্ট |
-| **v1.0.2** | ২০২৬-০১-১০ | 🆕 নতুন ফন্ট যোগ, 🎨 UI ইমপ্রুভমেন্ট |
-| **v1.0.1** | ২০২৬-০১-০৫ | 📄 পিডিএফ এক্সপোর্ট ফিক্স |
+| সংস্করণ | তারিখ | পরিবর্তন |
+|---------|-------|----------|
+| **v1.0.3** | ২০২৬-০১-১৫ | 🐛 বাগ ফিক্স, ⚡ পারফরম্যান্স |
+| **v1.0.2** | ২০২৬-০১-১০ | 🆕 নতুন ফন্ট, 🎨 UI উন্নয়ন |
+| **v1.0.1** | ২০২৬-০১-০৫ | 📄 PDF ফিক্স |
 | **v1.0.0** | ২০২৬-০১-০১ | 🎉 প্রথম রিলিজ |
 
 ---
 
 ## 🔗 লিংকসমূহ
 
-- [GitHub Repository](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3)
-- [Releases](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/releases)
-- [Issues](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/issues)
-- [Discussions](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/discussions)
-- [License](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/blob/main/LICENSE)
+| লিংক | URL |
+|------|-----|
+| GitHub Repository | [https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3) |
+| Releases | [https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/releases](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/releases) |
+| Issues | [https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/issues](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/issues) |
+| Discussions | [https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/discussions](https://github.com/Tasibtohs/kabboloker-brakkhakbi_V1.0.3/discussions) |
 
 ---
 
-<p align="center">
-  <b>❤️ বাংলা সাহিত্যকে ডিজিটাল প্ল্যাটফর্মে ছড়িয়ে দিন ❤️</b><br>
-  <br>
-  <img src="https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/From-Bangladesh-006747?style=for-the-badge"/>
-</p>
+<div align="center">
 
-<p align="center">
-  <sub>© 2026 Kabboloker Brakkhakbi — All Rights Reserved</sub>
-</p>
+---
+
+**❤️ বাংলা সাহিত্যকে ডিজিটাল প্ল্যাটফর্মে ছড়িয়ে দিন ❤️**
+
+[![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge)](https://github.com/Tasibtohs)
+[![From Bangladesh](https://img.shields.io/badge/From-Bangladesh-006747?style=for-the-badge)](https://en.wikipedia.org/wiki/Bangladesh)
+
+**© 2026 Kabboloker Brakkhakbi — All Rights Reserved**
+
+</div>
