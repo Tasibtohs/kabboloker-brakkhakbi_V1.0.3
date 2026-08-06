@@ -1,0 +1,6 @@
+{
+  "name": "কাব্যলোকের ব্রক্ষকবি",
+  "description": "কবি ও শব্দের আসর — একটি সম্পূর্ণ আধুনিক বাংলা কবিতা ও নোট লেখার প্রিমিয়াম অ্যাপ",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
