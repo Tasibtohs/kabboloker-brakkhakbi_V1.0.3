@@ -315,22 +315,23 @@ object PdfExportHelper {
         <html lang="bn">
         <head>
             <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="viewport" content="width=794, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
             <style>
                 $fontFaceRules
 
                 @page {
-                    size: A4;
+                    size: A4 portrait;
                     margin: 0;
                 }
 
                 * {
-                    box-sizing: border-box;
+                    box-sizing: border-box !important;
                     -webkit-print-color-adjust: exact !important;
                     print-color-adjust: exact !important;
                 }
 
-                body {
+                html, body {
+                    width: 794px;
                     margin: 0;
                     padding: 0;
                     background-color: #FAF9F4; /* Warm ivory book paper */
@@ -346,95 +347,97 @@ object PdfExportHelper {
 
                 /* ================= COVER PAGE STYLES ================= */
                 .cover-page {
-                    width: 100%;
-                    min-height: 100vh;
-                    padding: 40pt;
+                    width: 794px;
+                    min-height: 1123px;
+                    padding: 40px;
                     background-color: #FAF9F4;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    box-sizing: border-box;
                 }
                 .cover-border {
                     border: 2px solid #D4A017;
-                    padding: 8pt;
+                    padding: 10px;
                     width: 100%;
                     height: 100%;
-                    min-height: 720pt;
+                    min-height: 1023px;
                     box-sizing: border-box;
                 }
                 .cover-inner-border {
                     border: 1px dashed #B8860B;
-                    padding: 40pt 30pt;
+                    padding: 50px 40px;
                     width: 100%;
                     height: 100%;
-                    min-height: 700pt;
+                    min-height: 1000px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
                     text-align: center;
                     background: radial-gradient(circle at center, #FFFDF8 0%, #FAF9F4 100%);
+                    box-sizing: border-box;
                 }
                 .cover-top-ornament, .cover-bottom-ornament {
                     color: #B8860B;
-                    font-size: 16pt;
+                    font-size: 18px;
                     letter-spacing: 4px;
-                    margin: 15pt 0;
+                    margin: 20px 0;
                 }
                 .cover-badge {
-                    width: 50pt;
-                    height: 50pt;
+                    width: 60px;
+                    height: 60px;
                     border-radius: 50%;
                     background-color: #F3ECE0;
                     border: 1.5px solid #D4A017;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin-bottom: 20pt;
+                    margin-bottom: 25px;
                 }
                 .cover-icon {
-                    font-size: 24pt;
+                    font-size: 30px;
                     color: #B8860B;
                 }
                 .cover-title {
-                    font-size: 32pt;
+                    font-size: 36px;
                     color: #B8860B;
                     font-family: 'anupam_mahdi', serif;
-                    margin: 0 0 10pt 0;
+                    margin: 0 0 12px 0;
                     line-height: 1.3;
                 }
                 .cover-subtitle {
-                    font-size: 14pt;
+                    font-size: 18px;
                     color: #665A48;
                     font-style: italic;
-                    margin-bottom: 25pt;
+                    margin-bottom: 30px;
                 }
                 .cover-divider {
                     color: #D4A017;
-                    font-size: 14pt;
-                    margin-bottom: 35pt;
+                    font-size: 18px;
+                    margin-bottom: 40px;
                 }
                 .cover-info {
-                    margin-bottom: 50pt;
+                    margin-bottom: 60px;
                 }
                 .cover-info-label {
-                    font-size: 13pt;
+                    font-size: 16px;
                     font-weight: bold;
                     color: #2C2C3A;
-                    margin-bottom: 8pt;
+                    margin-bottom: 10px;
                     letter-spacing: 0.5px;
                 }
                 .cover-date {
-                    font-size: 10pt;
+                    font-size: 13px;
                     color: #6C6C7E;
-                    margin-bottom: 4pt;
+                    margin-bottom: 6px;
                 }
                 .cover-count {
-                    font-size: 10pt;
+                    font-size: 13px;
                     color: #8A8A9B;
                 }
                 .cover-footer-text {
-                    font-size: 9.5pt;
+                    font-size: 12px;
                     color: #B8860B;
                     font-style: italic;
                     margin-top: auto;
@@ -442,34 +445,37 @@ object PdfExportHelper {
 
                 /* ================= TABLE OF CONTENTS STYLES ================= */
                 .toc-page {
-                    padding: 50pt 55pt;
-                    min-height: 100vh;
+                    width: 794px;
+                    padding: 60px 70px;
+                    min-height: 1123px;
                     background-color: #FAF9F4;
                     position: relative;
+                    box-sizing: border-box;
                 }
                 .toc-container {
                     width: 100%;
+                    box-sizing: border-box;
                 }
                 .toc-header {
                     text-align: center;
-                    margin-bottom: 35pt;
+                    margin-bottom: 40px;
                 }
                 .toc-ornament {
                     color: #B8860B;
-                    font-size: 14pt;
-                    margin-bottom: 6pt;
+                    font-size: 18px;
+                    margin-bottom: 8px;
                 }
                 .toc-title {
-                    font-size: 24pt;
+                    font-size: 30px;
                     color: #B8860B;
-                    margin: 0 0 4pt 0;
+                    margin: 0 0 6px 0;
                     font-family: 'anupam_mahdi', serif;
                 }
                 .toc-subtitle {
-                    font-size: 10pt;
+                    font-size: 13px;
                     color: #7A7A8E;
                     font-style: italic;
-                    margin-bottom: 12pt;
+                    margin-bottom: 15px;
                 }
                 .toc-line {
                     height: 1.5px;
@@ -478,13 +484,15 @@ object PdfExportHelper {
                     margin: 0 auto;
                 }
                 .toc-list {
-                    margin-bottom: 40pt;
+                    margin-bottom: 50px;
+                    width: 100%;
                 }
                 .toc-item {
                     display: flex;
                     align-items: baseline;
-                    margin-bottom: 12pt;
-                    font-size: 12pt;
+                    margin-bottom: 14px;
+                    font-size: 15px;
+                    width: 100%;
                 }
                 .toc-item-title {
                     color: #2C2C3A;
@@ -494,7 +502,7 @@ object PdfExportHelper {
                 .toc-leader {
                     flex-grow: 1;
                     border-bottom: 1px dotted #C8C4B7;
-                    margin: 0 8pt;
+                    margin: 0 10px;
                     height: 1em;
                 }
                 .toc-item-page {
@@ -504,126 +512,150 @@ object PdfExportHelper {
                 }
                 .toc-footer {
                     position: absolute;
-                    bottom: 40pt;
-                    left: 55pt;
-                    right: 55pt;
+                    bottom: 40px;
+                    left: 70px;
+                    right: 70px;
                     text-align: center;
-                    font-size: 9pt;
+                    font-size: 12px;
                     color: #8C8C9E;
                     border-top: 1px solid #E5E0D3;
-                    padding-top: 8pt;
+                    padding-top: 10px;
+                    box-sizing: border-box;
                 }
 
                 /* ================= POEM PAGE STYLES ================= */
                 .note-page {
-                    padding: 50pt 55pt 60pt 55pt;
-                    min-height: 100vh;
+                    width: 794px;
+                    padding: 60px 70px 70px 70px;
+                    min-height: 1123px;
                     position: relative;
                     background-color: #FAF9F4;
+                    box-sizing: border-box;
                 }
                 .page-top-ornament {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin-bottom: 25pt;
+                    margin-bottom: 25px;
+                    width: 100%;
                 }
                 .top-line {
                     height: 1px;
-                    width: 60pt;
+                    width: 80px;
                     background-color: #D4A017;
                     opacity: 0.5;
                 }
                 .top-symbol {
                     color: #B8860B;
-                    font-size: 9pt;
-                    margin: 0 10pt;
+                    font-size: 12px;
+                    margin: 0 12px;
                 }
                 .poem-header {
-                    margin-bottom: 20pt;
+                    width: 100%;
+                    margin-bottom: 25px;
+                    box-sizing: border-box;
                 }
                 .poem-title {
-                    font-size: 24pt;
-                    margin: 0 0 8pt 0;
+                    width: 100%;
+                    font-size: 28px;
+                    margin: 0 0 10px 0;
                     font-weight: bold;
-                    line-height: 1.35;
+                    line-height: 1.4;
+                    box-sizing: border-box;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    word-break: normal;
                 }
                 .poem-divider {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin: 10pt 0 12pt 0;
+                    margin: 12px 0 15px 0;
+                    width: 100%;
                 }
                 .poem-divider-line {
                     height: 1px;
-                    width: 40pt;
+                    width: 60px;
                     background-color: #D4A017;
                     opacity: 0.6;
                 }
                 .poem-symbol {
                     color: #B8860B;
-                    font-size: 11pt;
-                    margin: 0 8pt;
+                    font-size: 14px;
+                    margin: 0 10px;
                 }
                 .poem-meta {
-                    font-size: 9.5pt;
+                    width: 100%;
+                    font-size: 12px;
                     color: #7A7A8E;
                     font-style: italic;
+                    box-sizing: border-box;
                 }
                 .poem-body {
+                    width: 100%;
+                    box-sizing: border-box;
+                    display: block;
                     white-space: pre-wrap;
                     word-wrap: break-word;
-                    padding-bottom: 50pt;
+                    overflow-wrap: break-word;
+                    word-break: normal;
+                    padding-bottom: 60px;
                 }
                 .page-bottom-footer {
                     position: absolute;
-                    bottom: 35pt;
-                    left: 55pt;
-                    right: 55pt;
+                    bottom: 40px;
+                    left: 70px;
+                    right: 70px;
+                    box-sizing: border-box;
                 }
                 .footer-divider {
                     height: 1px;
                     background-color: #E2DDD0;
-                    margin-bottom: 8pt;
+                    margin-bottom: 10px;
                 }
                 .footer-row {
                     display: flex;
                     justify-content: space-between;
-                    font-size: 8.5pt;
+                    font-size: 12px;
                     color: #8C8C9E;
+                    width: 100%;
                 }
 
                 /* ================= END PAGE STYLES ================= */
                 .end-page {
-                    min-height: 100vh;
-                    padding: 50pt;
+                    width: 794px;
+                    min-height: 1123px;
+                    padding: 60px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     text-align: center;
                     background-color: #FAF9F4;
+                    box-sizing: border-box;
                 }
                 .end-container {
                     margin: auto;
+                    width: 100%;
                 }
                 .end-symbol {
                     color: #B8860B;
-                    font-size: 18pt;
-                    margin-bottom: 12pt;
+                    font-size: 22px;
+                    margin-bottom: 15px;
                 }
                 .end-title {
-                    font-size: 22pt;
+                    font-size: 28px;
                     color: #B8860B;
                     font-family: 'anupam_mahdi', serif;
-                    margin: 0 0 10pt 0;
+                    margin: 0 0 12px 0;
                 }
                 .end-line {
                     height: 1.5px;
-                    width: 80pt;
+                    width: 100px;
                     background-color: #D4A017;
-                    margin: 0 auto 15pt auto;
+                    margin: 0 auto 18px auto;
                 }
                 .end-text {
-                    font-size: 10pt;
+                    font-size: 13px;
                     color: #7A7A8E;
                     font-style: italic;
                 }
@@ -683,6 +715,7 @@ object PdfExportHelper {
                     loadWithOverviewMode = true
                     useWideViewPort = true
                 }
+                webView.setInitialScale(100)
 
                 webView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView?, url: String?) {
@@ -693,8 +726,8 @@ object PdfExportHelper {
                         Handler(Looper.getMainLooper()).postDelayed({
                             val pdfDocument = android.graphics.pdf.PdfDocument()
                             try {
-                                val width = 595 // A4 width in points (8.27 in * 72 dpi)
-                                val pageHeight = 842 // A4 height in points (11.69 in * 72 dpi)
+                                val width = 794 // A4 width in pixels at 96 dpi
+                                val pageHeight = 1123 // A4 height in pixels at 96 dpi
 
                                 webView.measure(
                                     View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
