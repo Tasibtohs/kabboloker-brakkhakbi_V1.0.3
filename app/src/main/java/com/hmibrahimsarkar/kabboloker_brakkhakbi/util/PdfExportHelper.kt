@@ -234,8 +234,23 @@ object PdfExportHelper {
                 
                 val fontWeight = if (note.isBold) "bold" else "normal"
                 val fontStyle = if (note.isItalic) "italic" else "normal"
-                val fontSizePx = (note.fontSizeSp * 1.25f).coerceAtLeast(15f)
-                val lineHeightRatio = note.lineSpacingMultiplier.coerceAtLeast(1.8f)
+                
+                // Dynamic font size and line-spacing based on poem line count and length to fit within a single page
+                val rawLines = content.lines()
+                val lineCount = rawLines.size
+                val charCount = content.length
+
+                val (fontSizePx, lineHeightRatio) = when {
+                    lineCount > 35 || charCount > 1000 -> Pair(13.5f, 1.35f)
+                    lineCount > 22 || charCount > 500  -> Pair(15.0f, 1.4f)
+                    lineCount > 14 || charCount > 300  -> Pair(16.5f, 1.45f)
+                    else -> {
+                        val userSp = note.fontSizeSp.coerceIn(14f, 20f)
+                        val fPx = (userSp * 1.05f).coerceIn(16.5f, 19.0f)
+                        val lRatio = note.lineSpacingMultiplier.coerceIn(1.45f, 1.6f)
+                        Pair(fPx, lRatio)
+                    }
+                }
 
                 val safeTitle = escapeHtml(title)
                 val safeContent = escapeHtml(content)
@@ -526,7 +541,7 @@ object PdfExportHelper {
                 /* ================= POEM PAGE STYLES ================= */
                 .note-page {
                     width: 794px;
-                    padding: 60px 70px 70px 70px;
+                    padding: 40px 55px 45px 55px;
                     min-height: 1123px;
                     position: relative;
                     background-color: #FAF9F4;
@@ -536,31 +551,31 @@ object PdfExportHelper {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin-bottom: 25px;
+                    margin-bottom: 16px;
                     width: 100%;
                 }
                 .top-line {
                     height: 1px;
-                    width: 80px;
+                    width: 70px;
                     background-color: #D4A017;
                     opacity: 0.5;
                 }
                 .top-symbol {
                     color: #B8860B;
-                    font-size: 12px;
-                    margin: 0 12px;
+                    font-size: 11px;
+                    margin: 0 10px;
                 }
                 .poem-header {
                     width: 100%;
-                    margin-bottom: 25px;
+                    margin-bottom: 16px;
                     box-sizing: border-box;
                 }
                 .poem-title {
                     width: 100%;
-                    font-size: 28px;
-                    margin: 0 0 10px 0;
+                    font-size: 24px;
+                    margin: 0 0 6px 0;
                     font-weight: bold;
-                    line-height: 1.4;
+                    line-height: 1.35;
                     box-sizing: border-box;
                     word-wrap: break-word;
                     overflow-wrap: break-word;
@@ -570,23 +585,23 @@ object PdfExportHelper {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin: 12px 0 15px 0;
+                    margin: 8px 0 10px 0;
                     width: 100%;
                 }
                 .poem-divider-line {
                     height: 1px;
-                    width: 60px;
+                    width: 50px;
                     background-color: #D4A017;
                     opacity: 0.6;
                 }
                 .poem-symbol {
                     color: #B8860B;
-                    font-size: 14px;
-                    margin: 0 10px;
+                    font-size: 13px;
+                    margin: 0 8px;
                 }
                 .poem-meta {
                     width: 100%;
-                    font-size: 12px;
+                    font-size: 11px;
                     color: #7A7A8E;
                     font-style: italic;
                     box-sizing: border-box;
@@ -599,13 +614,13 @@ object PdfExportHelper {
                     word-wrap: break-word;
                     overflow-wrap: break-word;
                     word-break: normal;
-                    padding-bottom: 60px;
+                    padding-bottom: 40px;
                 }
                 .page-bottom-footer {
                     position: absolute;
-                    bottom: 40px;
-                    left: 70px;
-                    right: 70px;
+                    bottom: 25px;
+                    left: 55px;
+                    right: 55px;
                     box-sizing: border-box;
                 }
                 .footer-divider {
