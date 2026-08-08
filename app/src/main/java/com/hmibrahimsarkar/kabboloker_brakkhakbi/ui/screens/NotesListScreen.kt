@@ -185,31 +185,33 @@ fun NotesListScreen(
             )
         },
         floatingActionButton = {
-            // Golden circular FAB with linear gradient and subtle glow shadow
-            Box(
-                modifier = Modifier
-                    .size(60.dp)
-                    .shadow(
-                        elevation = 16.dp,
-                        shape = CircleShape,
-                        spotColor = GoldPrimary,
-                        ambientColor = GoldGlow
-                    )
-                    .clip(CircleShape)
-                    .background(
-                        Brush.linearGradient(
-                            colors = listOf(GoldLight, GoldPrimary, GoldDark)
+            if (selectedNoteIds.isEmpty()) {
+                // Golden circular FAB with linear gradient and subtle glow shadow
+                Box(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .shadow(
+                            elevation = 16.dp,
+                            shape = CircleShape,
+                            spotColor = GoldPrimary,
+                            ambientColor = GoldGlow
                         )
+                        .clip(CircleShape)
+                        .background(
+                            Brush.linearGradient(
+                                colors = listOf(GoldLight, GoldPrimary, GoldDark)
+                            )
+                        )
+                        .clickable { onOpenEditor(null) },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "New Poem Note",
+                        tint = LightTextPrimary,
+                        modifier = Modifier.size(30.dp)
                     )
-                    .clickable { onOpenEditor(null) },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "New Poem Note",
-                    tint = LightTextPrimary,
-                    modifier = Modifier.size(30.dp)
-                )
+                }
             }
         }
     ) { paddingValues ->
@@ -334,58 +336,47 @@ fun NotesListScreen(
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 14.dp, vertical = 6.dp)
-                        .shadow(8.dp, RoundedCornerShape(20.dp), spotColor = GoldPrimary.copy(alpha = 0.25f)),
-                    shape = RoundedCornerShape(20.dp),
+                        .padding(horizontal = 14.dp, vertical = 4.dp)
+                        .shadow(6.dp, RoundedCornerShape(16.dp), spotColor = GoldPrimary.copy(alpha = 0.2f)),
+                    shape = RoundedCornerShape(16.dp),
                     color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.95f),
-                    border = BorderStroke(1.dp, Brush.horizontalGradient(
-                        colors = listOf(
-                            GoldLight.copy(alpha = 0.6f),
-                            GoldPrimary.copy(alpha = 0.8f),
-                            GoldDark.copy(alpha = 0.5f)
-                        )
-                    ))
+                    border = BorderStroke(1.dp, GoldPrimary.copy(alpha = 0.4f))
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .padding(horizontal = 14.dp, vertical = 10.dp)
                     ) {
-                        // Top info row
+                        // Top info & controls row
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            // Left: "X টি নির্বাচিত" (clean & light)
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
                             ) {
-                                Box(
-                                    modifier = Modifier
-                                        .background(GoldPrimary, CircleShape)
-                                        .padding(horizontal = 10.dp, vertical = 4.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Filled.CheckCircle,
-                                            contentDescription = null,
-                                            tint = Color.White,
-                                            modifier = Modifier.size(14.dp)
-                                        )
-                                        Text(
-                                            text = "${selectedNoteIds.size} টি নির্বাচিত",
-                                            fontSize = 12.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            color = Color.White
-                                        )
-                                    }
-                                }
+                                Icon(
+                                    imageVector = Icons.Filled.CheckCircle,
+                                    contentDescription = null,
+                                    tint = GoldPrimary,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Text(
+                                    text = "${selectedNoteIds.size} টি নির্বাচিত",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
 
+                            // Right: "সব সিলেক্ট" text button + Close icon
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                            ) {
                                 val isAllSelected = selectedNoteIds.size == notes.size && notes.isNotEmpty()
                                 Surface(
                                     onClick = {
@@ -395,12 +386,11 @@ fun NotesListScreen(
                                             viewModel.selectAllNotes(notes.map { it.id })
                                         }
                                     },
-                                    shape = RoundedCornerShape(12.dp),
-                                    color = GoldLight.copy(alpha = 0.2f),
-                                    modifier = Modifier.clip(RoundedCornerShape(12.dp))
+                                    shape = RoundedCornerShape(8.dp),
+                                    color = Color.Transparent
                                 ) {
                                     Row(
-                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp),
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                                     ) {
@@ -412,27 +402,28 @@ fun NotesListScreen(
                                         )
                                         Text(
                                             text = if (isAllSelected) "সব বাতিল" else "সব সিলেক্ট",
-                                            fontSize = 11.sp,
-                                            fontWeight = FontWeight.SemiBold,
+                                            fontSize = 12.sp,
+                                            fontWeight = FontWeight.Bold,
                                             color = GoldPrimary
                                         )
                                     }
                                 }
-                            }
 
-                            IconButton(
-                                onClick = { viewModel.clearSelection() },
-                                modifier = Modifier.size(28.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Close,
-                                    contentDescription = "Close Selection Mode",
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                                IconButton(
+                                    onClick = { viewModel.clearSelection() },
+                                    modifier = Modifier.size(28.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Close,
+                                        contentDescription = "Close Selection Mode",
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         // Action Buttons Row
                         Row(
@@ -464,7 +455,7 @@ fun NotesListScreen(
                             SelectionActionButton(
                                 icon = Icons.Outlined.Delete,
                                 label = "মুছুন",
-                                tint = MaterialTheme.colorScheme.error,
+                                tint = Color(0xFFE53935),
                                 onClick = { showDeleteConfirmModal = true }
                             )
                         }
@@ -590,7 +581,7 @@ fun NotesListScreen(
                     if (targetIsGrid) {
                         LazyVerticalStaggeredGrid(
                             columns = StaggeredGridCells.Fixed(2),
-                            contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 80.dp),
+                            contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 110.dp),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalItemSpacing = 8.dp,
                             modifier = Modifier.fillMaxSize()
@@ -634,7 +625,7 @@ fun NotesListScreen(
                         }
                     } else {
                         LazyColumn(
-                            contentPadding = PaddingValues(bottom = 80.dp),
+                            contentPadding = PaddingValues(start = 0.dp, end = 0.dp, top = 4.dp, bottom = 110.dp),
                             modifier = Modifier.fillMaxSize()
                         ) {
                             items(
