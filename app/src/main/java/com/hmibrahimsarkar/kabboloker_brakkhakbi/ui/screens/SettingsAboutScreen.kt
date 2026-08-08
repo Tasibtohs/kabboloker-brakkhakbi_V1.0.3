@@ -5,16 +5,23 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.ripple
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -72,6 +80,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -79,6 +90,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.R
@@ -247,70 +259,77 @@ fun SettingsAboutScreen(
                         HorizontalDivider(color = GoldPrimary.copy(alpha = 0.2f))
                         Spacer(modifier = Modifier.height(18.dp))
 
-                        // Social Media Link Icon Buttons
+                        // Contact Options Section
                         Text(
-                            text = "সামাজিক যোগাযোগ ও লিংকসমূহ",
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = "যোগাযোগের মাধ্যমসমূহ",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = GoldPrimary,
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
 
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(14.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            SocialIconButton(
-                                label = "Facebook",
-                                badgeText = "FB",
-                                onClick = {
-                                    openUrl(context, "https://facebook.com")
-                                }
-                            )
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                ContactItemCard(
+                                    modifier = Modifier.weight(1f),
+                                    title = "ফেসবুক",
+                                    subtitle = "প্রোফাইল খুলুন",
+                                    badgeText = "FB",
+                                    badgeColor = Color(0xFF1877F2),
+                                    onClick = {
+                                        openFacebook(context, "https://www.facebook.com/h.m.ibrahimtohasarkar")
+                                    }
+                                )
 
-                            SocialIconButton(
-                                label = "YouTube",
-                                badgeText = "YT",
-                                onClick = {
-                                    openUrl(context, "https://youtube.com")
-                                }
-                            )
+                                ContactItemCard(
+                                    modifier = Modifier.weight(1f),
+                                    title = "ইনস্টাগ্রাম",
+                                    subtitle = "প্রোফাইল খুলুন",
+                                    badgeText = "IG",
+                                    badgeColor = Color(0xFFE4405F),
+                                    onClick = {
+                                        openInstagram(context, "https://www.instagram.com/h.m.ibrahimtohasarkar")
+                                    }
+                                )
+                            }
 
-                            SocialIconButton(
-                                label = "Instagram",
-                                badgeText = "IG",
-                                onClick = {
-                                    openUrl(context, "https://instagram.com")
-                                }
-                            )
-                        }
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                ContactItemCard(
+                                    modifier = Modifier.weight(1f),
+                                    title = "হোয়াটসঅ্যাপ",
+                                    subtitle = "+8801308556665",
+                                    badgeText = "WA",
+                                    badgeColor = Color(0xFF25D366),
+                                    onClick = {
+                                        openWhatsApp(context, "8801308556665")
+                                    }
+                                )
 
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        // Contact Button
-                        Button(
-                            onClick = {
-                                val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                                    data = Uri.parse("mailto:arfinahmed574@gmail.com")
-                                    putExtra(Intent.EXTRA_SUBJECT, "কাব্যলোকের ব্রহ্মকবি - যোগাযোগ")
-                                }
-                                try {
-                                    context.startActivity(emailIntent)
-                                } catch (e: Exception) {
-                                    Toast.makeText(context, "ইমেইল অ্যাপ খুঁজে পাওয়া যায়নি", Toast.LENGTH_SHORT).show()
-                                }
-                            },
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = GoldPrimary),
-                            modifier = Modifier.fillMaxWidth(0.85f)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Email,
-                                contentDescription = "Email",
-                                tint = Color.White,
-                                modifier = Modifier.size(18.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = "যোগাযোগ করুন", color = Color.White, fontWeight = FontWeight.Bold)
+                                ContactItemCard(
+                                    modifier = Modifier.weight(1f),
+                                    title = "ইমেইল",
+                                    subtitle = "hmibrahimsarkar712@gmail.com",
+                                    badgeText = "✉",
+                                    icon = Icons.Default.Email,
+                                    badgeColor = GoldPrimary,
+                                    onClick = {
+                                        openEmail(
+                                            context,
+                                            "hmibrahimsarkar712@gmail.com",
+                                            "কাব্যলোকের ব্রহ্মকবি - যোগাযোগ"
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -775,46 +794,81 @@ fun SettingsAboutScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 12.dp)
-                        .border(1.dp, GoldPrimary.copy(alpha = 0.3f), RoundedCornerShape(16.dp)),
-                    shape = RoundedCornerShape(16.dp),
+                        .border(1.dp, GoldPrimary.copy(alpha = 0.35f), RoundedCornerShape(18.dp)),
+                    shape = RoundedCornerShape(18.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
-                    Row(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                            .padding(18.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Default.Feedback,
-                                contentDescription = "Feedback",
-                                tint = GoldPrimary,
-                                modifier = Modifier.size(22.dp)
-                            )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(44.dp)
+                                    .clip(CircleShape)
+                                    .background(GoldPrimary.copy(alpha = 0.15f))
+                                    .border(1.dp, GoldPrimary.copy(alpha = 0.4f), CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Feedback,
+                                    contentDescription = "Feedback",
+                                    tint = GoldPrimary,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                            }
                             Spacer(modifier = Modifier.width(12.dp))
-                            Column {
+                            Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "সমস্যা রিপোর্ট / মতামত দিন",
-                                    fontSize = 14.5.sp,
+                                    text = "সাহায্য ও ফিডব্যাক পাঠান",
+                                    fontSize = 15.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
                                 Text(
-                                    text = "আপনার যেকোনো মতামত বা সমস্যা ডেভেলপারকে জানান",
+                                    text = "আপনার যেকোনো বক্তব্য, পরামর্শ বা সমস্যা ইমেইলে সরাসরি ডেভেলপারকে জানান",
                                     fontSize = 12.sp,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         }
 
-                        Button(
-                            onClick = { showFeedbackDialog = true },
-                            shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = GoldPrimary)
+                        Spacer(modifier = Modifier.height(14.dp))
+
+                        ScalePressButton(
+                            onClick = {
+                                openEmail(
+                                    context = context,
+                                    emailAddress = "hmibrahimsarkar712@gmail.com",
+                                    subject = "অ্যাপ ফিডব্যাক",
+                                    body = ""
+                                )
+                            },
+                            backgroundColor = GoldPrimary,
+                            contentColor = Color.White,
+                            shape = RoundedCornerShape(14.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(48.dp)
                         ) {
-                            Text("ফিডব্যাক", color = Color.White, fontSize = 12.sp)
+                            Icon(
+                                imageVector = Icons.Default.Email,
+                                contentDescription = "Send Feedback",
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "ফিডব্যাক পাঠান",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
                         }
                     }
                 }
@@ -959,18 +1013,12 @@ fun SettingsAboutScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        if (feedbackText.isNotBlank()) {
-                            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                                data = Uri.parse("mailto:arfinahmed574@gmail.com")
-                                putExtra(Intent.EXTRA_SUBJECT, "কাব্যলোকের ব্রহ্মকবি - ফিডব্যাক")
-                                putExtra(Intent.EXTRA_TEXT, feedbackText)
-                            }
-                            try {
-                                context.startActivity(emailIntent)
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "ইমেইল অ্যাপ পাওয়া যায়নি", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+                        openEmail(
+                            context = context,
+                            emailAddress = "hmibrahimsarkar712@gmail.com",
+                            subject = "কাব্যলোকের ব্রহ্মকবি - ফিডব্যাক",
+                            body = feedbackText
+                        )
                         showFeedbackDialog = false
                         feedbackText = ""
                     },
@@ -989,37 +1037,195 @@ fun SettingsAboutScreen(
 }
 
 @Composable
-fun SocialIconButton(
-    label: String,
+fun ContactItemCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    subtitle: String,
     badgeText: String,
+    badgeColor: Color,
+    icon: ImageVector? = null,
     onClick: () -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable { onClick() }
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.95f else 1f,
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "contactScale"
+    )
+
+    Card(
+        modifier = modifier
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .clickable(
+                interactionSource = interactionSource,
+                indication = ripple(),
+                onClick = onClick
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f)
+        ),
+        border = BorderStroke(1.dp, badgeColor.copy(alpha = 0.35f))
     ) {
-        Box(
+        Row(
             modifier = Modifier
-                .size(46.dp)
-                .clip(CircleShape)
-                .background(GoldPrimary.copy(alpha = 0.12f))
-                .border(1.dp, GoldPrimary.copy(alpha = 0.5f), CircleShape),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = badgeText,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold,
-                color = GoldPrimary
-            )
+            Box(
+                modifier = Modifier
+                    .size(38.dp)
+                    .clip(CircleShape)
+                    .background(badgeColor.copy(alpha = 0.15f))
+                    .border(1.dp, badgeColor.copy(alpha = 0.4f), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                if (icon != null) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = title,
+                        tint = badgeColor,
+                        modifier = Modifier.size(18.dp)
+                    )
+                } else {
+                    Text(
+                        text = badgeText,
+                        fontSize = 12.5.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = badgeColor
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(10.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = subtitle,
+                    fontSize = 11.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+    }
+}
+
+@Composable
+fun ScalePressButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = GoldPrimary,
+    contentColor: Color = Color.White,
+    shape: Shape = RoundedCornerShape(14.dp),
+    content: @Composable RowScope.() -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.95f else 1f,
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "buttonScale"
+    )
+
+    Button(
+        onClick = onClick,
+        modifier = modifier.graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        },
+        interactionSource = interactionSource,
+        shape = shape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = backgroundColor,
+            contentColor = contentColor
         )
+    ) {
+        content()
+    }
+}
+
+private fun openFacebook(context: android.content.Context, profileUrl: String) {
+    try {
+        val uri = Uri.parse("fb://facewebmodal/f?href=$profileUrl")
+        val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+            setPackage("com.facebook.katana")
+        }
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(profileUrl))
+            context.startActivity(intent)
+        } catch (e2: Exception) {
+            Toast.makeText(context, "লিংকটি খোলা সম্ভব হয়নি", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+private fun openInstagram(context: android.content.Context, profileUrl: String) {
+    try {
+        val uri = Uri.parse(profileUrl)
+        val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+            setPackage("com.instagram.android")
+        }
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(profileUrl))
+            context.startActivity(intent)
+        } catch (e2: Exception) {
+            Toast.makeText(context, "লিংকটি খোলা সম্ভব হয়নি", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+private fun openWhatsApp(context: android.content.Context, phoneNumber: String) {
+    val cleanNumber = phoneNumber.replace("+", "").replace(" ", "").replace("-", "")
+    val waUrl = "https://wa.me/$cleanNumber"
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(waUrl)).apply {
+            setPackage("com.whatsapp")
+        }
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(waUrl))
+            context.startActivity(intent)
+        } catch (e2: Exception) {
+            Toast.makeText(context, "হোয়াটসঅ্যাপ খোলা সম্ভব হয়নি", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+private fun openEmail(
+    context: android.content.Context,
+    emailAddress: String,
+    subject: String = "",
+    body: String = ""
+) {
+    try {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:$emailAddress")
+            if (subject.isNotBlank()) putExtra(Intent.EXTRA_SUBJECT, subject)
+            if (body.isNotBlank()) putExtra(Intent.EXTRA_TEXT, body)
+        }
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        Toast.makeText(context, "ইমেইল অ্যাপ খুঁজে পাওয়া যায়নি", Toast.LENGTH_SHORT).show()
     }
 }
 
