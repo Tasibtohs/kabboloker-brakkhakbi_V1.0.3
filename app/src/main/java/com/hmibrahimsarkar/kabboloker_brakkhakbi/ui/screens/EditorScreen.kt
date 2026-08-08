@@ -98,6 +98,8 @@ import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldDark
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldGlow
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldLight
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldPrimary
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.resolveAdaptiveTextColor
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.resolveAdaptiveTitleColor
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.viewmodel.EditorViewModel
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
@@ -147,8 +149,8 @@ fun EditorScreen(
         editorViewModel.loadNote(noteId)
     }
 
-    val titleColor = try { Color(android.graphics.Color.parseColor(noteState.titleColorHex)) } catch (e: Exception) { AmberAccent }
-    val textColor = try { Color(android.graphics.Color.parseColor(noteState.textColorHex)) } catch (e: Exception) { MaterialTheme.colorScheme.onSurface }
+    val titleColor = resolveAdaptiveTitleColor(noteState.titleColorHex)
+    val textColor = resolveAdaptiveTextColor(noteState.textColorHex)
 
     val selectedFontOption = BengaliFonts.getFontByKey(noteState.fontFamilyKey)
 
