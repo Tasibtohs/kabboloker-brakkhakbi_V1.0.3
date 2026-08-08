@@ -55,7 +55,9 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldGlow
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -102,7 +104,7 @@ fun NoteCardItem(
             .scale(scale)
             .border(
                 width = if (isSelected) 2.5.dp else 1.dp,
-                brush = if (isSelected) Brush.horizontalGradient(listOf(AmberAccent, GoldPrimary, AmberAccent)) else Brush.linearGradient(listOf(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f), MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f))),
+                color = if (isSelected) GoldPrimary else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
                 shape = RoundedCornerShape(18.dp)
             )
             .combinedClickable(
@@ -111,7 +113,7 @@ fun NoteCardItem(
             ),
         shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) AmberAccent.copy(alpha = 0.15f) else cardBg
+            containerColor = cardBg
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = elevation.dp)
     ) {
@@ -120,8 +122,8 @@ fun NoteCardItem(
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min)
         ) {
-            // Lock Accent Stripe (Left side) if note is locked
-            if (note.isLocked) {
+            // Lock Accent Stripe (Left side) if note is locked (hidden in selection mode)
+            if (note.isLocked && !isInSelectionMode) {
                 Box(
                     modifier = Modifier
                         .width(5.dp)
@@ -227,25 +229,35 @@ fun NoteCardItem(
                         modifier = Modifier.weight(1f, fill = false)
                     )
 
-                    // Top Right Corner Badges (Pin & Lock)
+                    // Top Right Corner Badges (Pin, Lock & Selection Checkmark)
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        if (note.isLocked) {
-                            Icon(
-                                imageVector = Icons.Filled.Lock,
-                                contentDescription = "Locked",
-                                tint = Color(0xFFC62828),
-                                modifier = Modifier.size(18.dp)
-                            )
+                        if (!isInSelectionMode) {
+                            if (note.isLocked) {
+                                Icon(
+                                    imageVector = Icons.Filled.Lock,
+                                    contentDescription = "Locked",
+                                    tint = Color(0xFFC62828),
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
+                            if (note.isPinned) {
+                                Icon(
+                                    imageVector = Icons.Filled.PushPin,
+                                    contentDescription = "Pinned",
+                                    tint = AmberAccent,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
                         }
-                        if (note.isPinned) {
+                        if (isInSelectionMode || isSelected) {
                             Icon(
-                                imageVector = Icons.Filled.PushPin,
-                                contentDescription = "Pinned",
-                                tint = AmberAccent,
-                                modifier = Modifier.size(18.dp)
+                                imageVector = if (isSelected) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
+                                contentDescription = if (isSelected) "Selected" else "Not Selected",
+                                tint = if (isSelected) GoldPrimary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                     }
@@ -306,64 +318,66 @@ fun NoteCardItem(
 
                     Spacer(modifier = Modifier.width(8.dp))
 
-                    // Right side: Rounded pill container with 3 icons (Pin, Lock, Delete)
-                    Row(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(50))
-                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                            .border(
-                                width = 0.5.dp,
-                                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(50)
-                            )
-                            .padding(horizontal = 6.dp, vertical = 2.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        // 1. Pin Icon
-                        IconButton(
-                            onClick = onTogglePin,
-                            modifier = Modifier.size(28.dp)
+                    // Right side: Rounded pill container with 3 icons (Pin, Lock, Delete) - Only if NOT in selection mode
+                    if (!isInSelectionMode) {
+                        Row(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(50))
+                                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                                .border(
+                                    width = 0.5.dp,
+                                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
+                                    shape = RoundedCornerShape(50)
+                                )
+                                .padding(horizontal = 6.dp, vertical = 2.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(2.dp)
                         ) {
-                            Icon(
-                                imageVector = if (note.isPinned) Icons.Filled.PushPin else Icons.Outlined.PushPin,
-                                contentDescription = "Pin Note",
-                                tint = if (note.isPinned) AmberAccent else MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
+                            // 1. Pin Icon
+                            IconButton(
+                                onClick = onTogglePin,
+                                modifier = Modifier.size(28.dp)
+                            ) {
+                                Icon(
+                                    imageVector = if (note.isPinned) Icons.Filled.PushPin else Icons.Outlined.PushPin,
+                                    contentDescription = "Pin Note",
+                                    tint = if (note.isPinned) AmberAccent else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
 
-                        // 2. Lock Icon
-                        IconButton(
-                            onClick = onToggleLock,
-                            modifier = Modifier.size(28.dp)
-                        ) {
-                            Icon(
-                                imageVector = if (note.isLocked) Icons.Filled.Lock else Icons.Outlined.Lock,
-                                contentDescription = "Lock Note",
-                                tint = if (note.isLocked) Color(0xFFC62828) else MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
+                            // 2. Lock Icon
+                            IconButton(
+                                onClick = onToggleLock,
+                                modifier = Modifier.size(28.dp)
+                            ) {
+                                Icon(
+                                    imageVector = if (note.isLocked) Icons.Filled.Lock else Icons.Outlined.Lock,
+                                    contentDescription = "Lock Note",
+                                    tint = if (note.isLocked) Color(0xFFC62828) else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
 
-                        // 3. Delete Icon
-                        IconButton(
-                            onClick = onDelete,
-                            modifier = Modifier.size(28.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.Delete,
-                                contentDescription = "Delete Note",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(16.dp)
-                            )
+                            // 3. Delete Icon
+                            IconButton(
+                                onClick = onDelete,
+                                modifier = Modifier.size(28.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Delete,
+                                    contentDescription = "Delete Note",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
                         }
                     }
                 }
             }
 
-            // Pin Accent Stripe (Right side) if note is pinned
-            if (note.isPinned) {
+            // Pin Accent Stripe (Right side) if note is pinned (hidden in selection mode)
+            if (note.isPinned && !isInSelectionMode) {
                 Box(
                     modifier = Modifier
                         .width(5.dp)
