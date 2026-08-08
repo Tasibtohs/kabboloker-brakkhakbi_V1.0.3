@@ -3,8 +3,6 @@ name: Build Android APK
 on:
   push:
     branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
@@ -48,23 +46,26 @@ jobs:
           -keypass android \
           -dname "CN=Android Debug,O=Android,C=US"
 
+    - name: Decode Release Keystore
+      run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > kabyalok-release.jks
+
     - name: Build Debug APK
       run: ./gradlew assembleDebug --stacktrace
 
-    - name: Upload APK Artifact
+    - name: Build Release APK
+      run: ./gradlew assembleRelease --stacktrace
+      env:
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+    - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: Kabboloker-Brakkhakbi
+        name: Kabboloker-Brakkhakbi-Debug
         path: app/build/outputs/apk/debug/*.apk
 
-    - name: Upload APK to Release
-      uses: softprops/action-gh-release@v2
-      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    - name: Upload Release APK
+      uses: actions/upload-artifact@v4
       with:
-        files: app/build/outputs/apk/debug/*.apk
-        tag_name: v1.0.${{ github.run_number }}
-        name: Kabboloker_Brakkhakbi v1.0.${{ github.run_number }}
-        draft: false
-        prerelease: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: Kabboloker-Brakkhakbi-Release
+        path: app/build/outputs/apk/release/*.apk
