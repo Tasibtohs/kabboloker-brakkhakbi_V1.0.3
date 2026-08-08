@@ -42,3 +42,60 @@ val LavenderDark = Color(0xFF8A6CB3)
 val MutedGrey = Color(0xFF8A8A9E)
 val RoseAccent = Color(0xFFE57373)
 val EmeraldGreen = Color(0xFF81C784)
+
+@androidx.compose.runtime.Composable
+fun resolveAdaptiveTextColor(hexString: String): Color {
+    val defaultOnSurface = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
+    val bg = androidx.compose.material3.MaterialTheme.colorScheme.background
+    val bgLuminance = bg.red * 0.2126f + bg.green * 0.7152f + bg.blue * 0.0722f
+    val isDarkTheme = bgLuminance < 0.5f
+
+    if (hexString.isBlank() || hexString.equals("#1A1A2E", ignoreCase = true) || hexString.equals("DEFAULT", ignoreCase = true)) {
+        return defaultOnSurface
+    }
+    return try {
+        val parsed = Color(android.graphics.Color.parseColor(hexString))
+        val luminance = parsed.red * 0.2126f + parsed.green * 0.7152f + parsed.blue * 0.0722f
+
+        if (isDarkTheme && luminance < 0.35f) {
+            defaultOnSurface
+        } else if (!isDarkTheme && luminance > 0.75f) {
+            defaultOnSurface
+        } else {
+            parsed
+        }
+    } catch (e: Exception) {
+        defaultOnSurface
+    }
+}
+
+@androidx.compose.runtime.Composable
+fun resolveAdaptiveTitleColor(hexString: String): Color {
+    val defaultTitleColor = AmberAccent
+    val defaultOnSurface = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
+    val bg = androidx.compose.material3.MaterialTheme.colorScheme.background
+    val bgLuminance = bg.red * 0.2126f + bg.green * 0.7152f + bg.blue * 0.0722f
+    val isDarkTheme = bgLuminance < 0.5f
+
+    if (hexString.isBlank() || hexString.equals("DEFAULT", ignoreCase = true)) {
+        return defaultTitleColor
+    }
+    if (hexString.equals("#1A1A2E", ignoreCase = true)) {
+        return defaultOnSurface
+    }
+    return try {
+        val parsed = Color(android.graphics.Color.parseColor(hexString))
+        val luminance = parsed.red * 0.2126f + parsed.green * 0.7152f + parsed.blue * 0.0722f
+
+        if (isDarkTheme && luminance < 0.35f) {
+            defaultTitleColor
+        } else if (!isDarkTheme && luminance > 0.85f) {
+            defaultTitleColor
+        } else {
+            parsed
+        }
+    } catch (e: Exception) {
+        defaultTitleColor
+    }
+}
+
