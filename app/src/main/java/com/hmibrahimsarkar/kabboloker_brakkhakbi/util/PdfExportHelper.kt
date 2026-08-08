@@ -241,12 +241,12 @@ object PdfExportHelper {
                 val charCount = content.length
 
                 val (fontSizePx, lineHeightRatio) = when {
-                    lineCount > 35 || charCount > 1000 -> Pair(13.5f, 1.35f)
-                    lineCount > 22 || charCount > 500  -> Pair(15.0f, 1.4f)
-                    lineCount > 14 || charCount > 300  -> Pair(16.5f, 1.45f)
+                    lineCount > 35 || charCount > 1000 -> Pair(16.0f, 1.4f)
+                    lineCount > 22 || charCount > 500  -> Pair(18.0f, 1.45f)
+                    lineCount > 14 || charCount > 300  -> Pair(20.0f, 1.5f)
                     else -> {
-                        val userSp = note.fontSizeSp.coerceIn(14f, 20f)
-                        val fPx = (userSp * 1.05f).coerceIn(16.5f, 19.0f)
+                        val userSp = note.fontSizeSp.coerceIn(14f, 22f)
+                        val fPx = (userSp * 1.25f).coerceIn(20.0f, 24.0f)
                         val lRatio = note.lineSpacingMultiplier.coerceIn(1.45f, 1.6f)
                         Pair(fPx, lRatio)
                     }
@@ -572,8 +572,8 @@ object PdfExportHelper {
                 }
                 .poem-title {
                     width: 100%;
-                    font-size: 24px;
-                    margin: 0 0 6px 0;
+                    font-size: 28px;
+                    margin: 0 0 8px 0;
                     font-weight: bold;
                     line-height: 1.35;
                     box-sizing: border-box;
@@ -708,17 +708,7 @@ object PdfExportHelper {
     ) {
         Handler(Looper.getMainLooper()).post {
             try {
-                Log.d(TAG, "Starting PDF generation process to temp file: ${outputFile.absolutePath}")
-
-                // CRITICAL: Enable whole document drawing BEFORE instantiating WebView for offscreen canvas capture
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    try {
-                        WebView.enableSlowWholeDocumentDraw()
-                        Log.d(TAG, "WebView.enableSlowWholeDocumentDraw() called successfully")
-                    } catch (e: Exception) {
-                        Log.w(TAG, "enableSlowWholeDocumentDraw warning: ${e.message}")
-                    }
-                }
+                Log.d(TAG, "Starting PDF generation via PrintDocumentAdapter to temp file: ${outputFile.absolutePath}")
 
                 val webView = WebView(context)
                 webView.settings.apply {
@@ -730,70 +720,36 @@ object PdfExportHelper {
                     loadWithOverviewMode = true
                     useWideViewPort = true
                 }
-                webView.setInitialScale(100)
 
                 webView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView?, url: String?) {
                         super.onPageFinished(view, url)
                         Log.d(TAG, "WebView onPageFinished triggered")
 
-                        // 500ms delay to allow asset fonts and CSS to stabilize layout
+                        // 600ms delay to allow asset fonts and CSS to fully render
                         Handler(Looper.getMainLooper()).postDelayed({
-                            val pdfDocument = android.graphics.pdf.PdfDocument()
                             try {
-                                val width = 794 // A4 width in pixels at 96 dpi
-                                val pageHeight = 1123 // A4 height in pixels at 96 dpi
+                                val printAdapter = webView.createPrintDocumentAdapter("Kabboloker_Brakkhakbi_Document")
+                                android.print.PdfPrintHelper.generatePdfFromAdapter(
+                                    printAdapter,
+                                    outputFile,
+                                    object : android.print.PdfPrintHelper.PdfPrintCallback {
+                                        override fun onSuccess(file: File) {
+                                            Log.d(TAG, "PdfPrintHelper PDF export successful. File size: ${file.length()} bytes")
+                                            onSuccess(file)
+                                        }
 
-                                webView.measure(
-                                    View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                                        override fun onError(e: Exception) {
+                                            Log.e(TAG, "PdfPrintHelper PDF export failed", e)
+                                            onError(e)
+                                        }
+                                    }
                                 )
-                                val measuredHeight = webView.measuredHeight.coerceAtLeast(pageHeight)
-                                webView.layout(0, 0, width, measuredHeight)
-
-                                val totalPages = Math.ceil(measuredHeight.toDouble() / pageHeight.toDouble()).toInt().coerceAtLeast(1)
-                                Log.d(TAG, "Measured WebView height: $measuredHeight px, Total pages to generate: $totalPages")
-
-                                for (i in 0 until totalPages) {
-                                    val pageInfo = android.graphics.pdf.PdfDocument.PageInfo.Builder(width, pageHeight, i + 1).create()
-                                    val page = pdfDocument.startPage(pageInfo)
-                                    val canvas = page.canvas
-
-                                    canvas.save()
-                                    canvas.translate(0f, -i.toFloat() * pageHeight.toFloat())
-                                    webView.draw(canvas)
-                                    canvas.restore()
-
-                                    pdfDocument.finishPage(page)
-                                }
-
-                                if (outputFile.exists()) {
-                                    outputFile.delete()
-                                }
-
-                                java.io.FileOutputStream(outputFile).use { out ->
-                                    pdfDocument.writeTo(out)
-                                    out.flush()
-                                }
-
-                                if (outputFile.exists() && outputFile.length() > 0) {
-                                    Log.d(TAG, "PDF write successful. File size: ${outputFile.length()} bytes")
-                                    onSuccess(outputFile)
-                                } else {
-                                    Log.e(TAG, "Generated PDF file is 0 KB or missing")
-                                    onError(Exception("PDF ফাইলটি খালি তৈরি হয়েছে (0 KB)"))
-                                }
                             } catch (e: Exception) {
-                                Log.e(TAG, "Error rendering PDF canvas or writing to file", e)
+                                Log.e(TAG, "Error rendering PDF via PrintDocumentAdapter", e)
                                 onError(Exception("PDF তৈরি করতে ব্যর্থ: ${e.localizedMessage}"))
-                            } finally {
-                                try {
-                                    pdfDocument.close()
-                                } catch (ex: Exception) {
-                                    Log.e(TAG, "Error closing PdfDocument", ex)
-                                }
                             }
-                        }, 500)
+                        }, 600)
                     }
                 }
 
