@@ -48,6 +48,8 @@ import com.hmibrahimsarkar.kabboloker_brakkhakbi.data.local.entity.NoteEntity
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.font.BengaliFonts
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.AmberAccent
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldPrimary
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.resolveAdaptiveTextColor
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.resolveAdaptiveTitleColor
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -90,11 +92,7 @@ fun NoteCardItem(
         label = "cardElevation"
     )
 
-    val titleColor = try {
-        Color(android.graphics.Color.parseColor(note.titleColorHex))
-    } catch (e: Exception) {
-        MaterialTheme.colorScheme.onSurface
-    }
+    val titleColor = resolveAdaptiveTitleColor(note.titleColorHex)
 
     val fontOption = BengaliFonts.getFontByKey(note.fontFamilyKey)
 
@@ -270,7 +268,7 @@ fun NoteCardItem(
                         text = previewText,
                         fontSize = 14.sp,
                         fontFamily = fontOption.fontFamily,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f),
+                        color = resolveAdaptiveTextColor(note.textColorHex).copy(alpha = 0.85f),
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         lineHeight = 20.sp
