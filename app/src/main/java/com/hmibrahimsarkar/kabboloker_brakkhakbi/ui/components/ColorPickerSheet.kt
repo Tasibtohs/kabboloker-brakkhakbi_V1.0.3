@@ -79,6 +79,8 @@ import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldDark
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldGlow
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldLight
 import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.GoldPrimary
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.resolveAdaptiveTextColor
+import com.hmibrahimsarkar.kabboloker_brakkhakbi.ui.theme.resolveAdaptiveTitleColor
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.min
@@ -228,8 +230,8 @@ fun ColorPickerSheet(
             )
             Spacer(modifier = Modifier.height(6.dp))
 
-            val previewTitleColor = try { Color(android.graphics.Color.parseColor(titleColorHex)) } catch (e: Exception) { GoldPrimary }
-            val previewTextColor = try { Color(android.graphics.Color.parseColor(textColorHex)) } catch (e: Exception) { MaterialTheme.colorScheme.onSurface }
+            val previewTitleColor = resolveAdaptiveTitleColor(titleColorHex)
+            val previewTextColor = resolveAdaptiveTextColor(textColorHex)
 
             Card(
                 modifier = Modifier
