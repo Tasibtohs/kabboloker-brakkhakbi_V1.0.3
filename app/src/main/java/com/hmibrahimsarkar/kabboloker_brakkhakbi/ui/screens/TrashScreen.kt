@@ -128,7 +128,7 @@ fun TrashScreen(
                 }
             } else {
                 LazyColumn(
-                    contentPadding = PaddingValues(16.dp),
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 110.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(trashedNotes) { note ->
