@@ -69,3 +69,14 @@ jobs:
       with:
         name: Kabboloker-Brakkhakbi-Release
         path: app/build/outputs/apk/release/*.apk
+
+    - name: Create Release and Upload APK
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "app/build/outputs/apk/release/*.apk"
+        tag: v1.0.${{ github.run_number }}
+        name: "Kabboloker Brakkhakbi v1.0.${{ github.run_number }}"
+        body: "✅ Release APK - Ready to install"
+        draft: false
+        prerelease: true
+        token: ${{ secrets.GITHUB_TOKEN }}
